@@ -36,6 +36,7 @@ a { color: inherit; text-decoration: none; }
 .brand { font-size: 13px; font-weight: 800; letter-spacing: .28em; }
 .site-header nav { display: flex; gap: clamp(24px, 4vw, 48px); }
 .site-header nav a { position: relative; text-transform: uppercase; font-size: 11px; font-weight: 600; letter-spacing: .18em; }
+.site-header nav .language-link { margin-left: clamp(2px, 1vw, 12px); padding-left: clamp(12px, 1.6vw, 22px); border-left: 1px solid color-mix(in oklab, currentColor 28%, transparent); }
 .site-header nav a::after, .text-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .35s ease; }
 .site-header nav a:hover::after, .site-header nav a:focus-visible::after, .text-link:hover::after, .text-link:focus-visible::after { transform: scaleX(1); transform-origin: left; }
 
@@ -242,6 +243,7 @@ footer div { display: flex; gap: 32px; text-transform: uppercase; font-size: 9px
   .site-header { height: 66px; padding-inline: 20px; }
   .site-header nav { gap: 13px; }
   .site-header nav a { font-size: 8px; letter-spacing: .1em; }
+  .site-header nav .language-link { margin-left: 0; padding-left: 8px; }
   .brand { font-size: 11px; }
   .panel { position: relative; top: auto; padding: 66px 20px 48px; min-height: auto; margin-bottom: 0; box-shadow: 0 -12px 30px color-mix(in oklab, var(--ink) 6%, transparent); }
   .panel:not(.contact) { margin-bottom: 0; }

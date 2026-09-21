@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import ConsentManager from "@/components/ConsentManager";
 
@@ -59,10 +59,6 @@ function SectionHeader({ number, title, side }: { number: string; title: string;
 }
 
 function Index() {
-  useEffect(() => {
-    document.documentElement.lang = "en";
-    return () => { document.documentElement.lang = "fr"; };
-  }, []);
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -368,8 +364,8 @@ function Index() {
         setSent(true);
         return;
       }
-      if (result.errors) setErrors(result.errors);
-      setSubmitError(result.message);
+      if (result.errors) setErrors(validate(fields));
+      setSubmitError("We were unable to send your message. Please check the information provided and try again.");
     } catch {
       setSubmitError(
         "We were unable to send your message. Please try again in a few moments.",
@@ -383,11 +379,11 @@ function Index() {
     <main>
       <header className="site-header">
         <a className="brand" href="#introduction" aria-label="TRADEMARK — home">TRADEMARK</a>
-        <nav aria-label="Navigation principale">
+        <nav aria-label="Main navigation">
           <a href="#approche">Approach</a>
           <a href="#reseau">Network</a>
           <a href="#intervention">Engagement</a>
-          <a href="#contact">Contact</a><a className="language-link" href="/#introduction" aria-label="Version française">FR</a>
+          <a href="#contact">Contact</a><Link className="language-link" to="/" hash="introduction" aria-label="Version française">FR</Link>
         </nav>
       </header>
 
@@ -474,8 +470,8 @@ function Index() {
              <aside className="offices" data-reveal="body">
               <p className="micro-title">Our offices</p>
               <h3>Paris</h3><p>134-136 boulevard Brune<br />75014 Paris</p>
-              <h3>Casablanca</h3><p>Appartement n°4, Résidence Hamza<br />Quartier Palmier — 20340</p>
-              <h3>Abidjan</h3><p>II Plateaux Vallon, villa lot 522<br />parcelle 222, Cocody</p>
+               <h3>Casablanca</h3><p>Apartment 4, Hamza Residence<br />Palmier District — 20340</p>
+               <h3>Abidjan</h3><p>II Plateaux Vallon, villa lot 522<br />plot 222, Cocody</p>
               <a href="mailto:contact@tmrk.fr">contact@tmrk.fr</a>
             </aside>
               <form ref={formRef} onSubmit={submit} data-reveal="body" noValidate>

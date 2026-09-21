@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import ConsentManager from "@/components/ConsentManager";
 
@@ -384,6 +384,7 @@ function Index() {
           <a href="#reseau">Réseau</a>
           <a href="#intervention">Intervention</a>
           <a href="#contact">Contact</a>
+          <Link className="language-link" to="/en" hash="introduction" aria-label="English version">EN</Link>
         </nav>
       </header>
 
