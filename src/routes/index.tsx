@@ -153,6 +153,11 @@ function Index() {
       const top = approche.getBoundingClientRect().top;
       if (top <= 2) holdApproche();
     };
+    const watchReseau = () => {
+      if (reseauDone || !reseau) return;
+      const top = reseau.getBoundingClientRect().top;
+      if (top <= 2) holdReseau();
+    };
     window.addEventListener("scroll", watchApproche, { passive: true });
     watchApproche();
 
