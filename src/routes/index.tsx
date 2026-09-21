@@ -108,7 +108,6 @@ function Index() {
           if (target.classList.contains("display-sweep") && introFooter) {
             introFooter.classList.add("is-visible");
           }
-          if (approche && approche.contains(target)) holdApproche();
           observer.unobserve(entry.target);
         });
       },
