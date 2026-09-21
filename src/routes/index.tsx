@@ -307,9 +307,50 @@ function Index() {
     };
   }, []);
 
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSent(true);
+    if (sending) return;
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const fields: Record<FieldName, string> = {
+      firstName: String(data.get("firstName") ?? ""),
+      lastName: String(data.get("lastName") ?? ""),
+      company: String(data.get("company") ?? ""),
+      email: String(data.get("email") ?? ""),
+      message: String(data.get("message") ?? ""),
+    };
+    const found = validate(fields);
+    setErrors(found);
+    setSubmitError(null);
+    if (Object.keys(found).length > 0) return;
+
+    setSending(true);
+    try {
+      const response = await fetch("/contact.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...fields, telephone: String(data.get("telephone") ?? "") }),
+      });
+      const result = (await response.json()) as {
+        ok: boolean;
+        message: string;
+        errors?: FieldErrors;
+      };
+      if (result.ok) {
+        form.reset();
+        setErrors({});
+        setSent(true);
+        return;
+      }
+      if (result.errors) setErrors(result.errors);
+      setSubmitError(result.message);
+    } catch {
+      setSubmitError(
+        "Une erreur est survenue lors de l’envoi. Merci de réessayer dans quelques instants.",
+      );
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
