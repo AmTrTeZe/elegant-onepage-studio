@@ -141,7 +141,7 @@ function Index() {
           </div>
            <p className="micro-title" data-reveal="label">Nos critères de sélection</p>
           <div className="criteria-grid">
-            {criteria.map(([number, title, copy], index) => (
+            {criteria.map(([number, title, copy]) => (
                <article className="criterion" data-reveal="item" key={number}>
                 <span>{number}</span><h3>{title}</h3><p>{copy}</p>
               </article>
