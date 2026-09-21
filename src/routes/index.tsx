@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { FormEvent, useEffect, useRef, useState } from "react";
+import ConsentManager from "@/components/ConsentManager";
 
 type FieldName = "firstName" | "lastName" | "company" | "email" | "message";
 type FieldErrors = Partial<Record<FieldName, string>>;
