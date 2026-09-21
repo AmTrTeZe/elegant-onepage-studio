@@ -117,8 +117,20 @@ function Index() {
     items.forEach((item) => {
       if (item !== introFooter) observer.observe(item);
     });
+
+    // Le maintien ne démarre qu'une fois APPROCHE calée en haut de l'écran,
+    // donc jamais pendant la transition CONTEXTE → APPROCHE.
+    const watchApproche = () => {
+      if (approcheDone || !approche) return;
+      const top = approche.getBoundingClientRect().top;
+      if (top <= 2) holdApproche();
+    };
+    window.addEventListener("scroll", watchApproche, { passive: true });
+    watchApproche();
+
     return () => {
       observer.disconnect();
+      window.removeEventListener("scroll", watchApproche);
       if (unlockTimer !== undefined) clearTimeout(unlockTimer);
       releaseApproche();
     };
