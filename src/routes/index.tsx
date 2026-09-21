@@ -450,19 +450,29 @@ function Index() {
               <h3>Paris</h3><p>134-136 boulevard Brune<br />75014 Paris</p>
               <h3>Casablanca</h3><p>Appartement n°4, Résidence Hamza<br />Quartier Palmier — 20340</p>
               <h3>Abidjan</h3><p>II Plateaux Vallon, villa lot 522<br />parcelle 222, Cocody</p>
-              <a href="mailto:contact@trademark-conseil.fr">contact@trademark-conseil.fr</a>
+              <a href="mailto:contact@tmrk.fr">contact@tmrk.fr</a>
             </aside>
-             <form onSubmit={submit} data-reveal="body">
+              <form ref={formRef} onSubmit={submit} data-reveal="body" noValidate>
               <p className="micro-title">Écrivez-nous</p>
-              <div className="form-grid">
-                <label>Prénom<input name="firstName" required /></label>
-                <label>Nom<input name="lastName" required /></label>
-                <label>Entreprise<input name="company" required /></label>
-                <label>E-mail<input type="email" name="email" required /></label>
-                <label className="full">Objet<textarea name="message" rows={2} required /></label>
-              </div>
-              <button type="submit">Envoyer</button>
-              {sent && <p className="form-status" role="status">Merci. Votre message est prêt à être transmis.</p>}
+              {sent ? (
+                <div className="form-thanks" role="status">
+                  <p className="form-thanks-title">Merci. Votre message a bien été transmis.</p>
+                  <p>Notre équipe en prendra connaissance avec attention et reviendra vers vous dans les meilleurs délais.</p>
+                </div>
+              ) : (
+                <>
+                  <div className="form-grid">
+                    <label>Prénom<input name="firstName" autoComplete="given-name" maxLength={100} />{errors.firstName && <span className="field-error">{errors.firstName}</span>}</label>
+                    <label>Nom<input name="lastName" autoComplete="family-name" maxLength={100} />{errors.lastName && <span className="field-error">{errors.lastName}</span>}</label>
+                    <label>Entreprise<input name="company" autoComplete="organization" maxLength={100} />{errors.company && <span className="field-error">{errors.company}</span>}</label>
+                    <label>E-mail<input type="email" name="email" autoComplete="email" maxLength={255} />{errors.email && <span className="field-error">{errors.email}</span>}</label>
+                    <label className="full">Objet<textarea name="message" rows={2} maxLength={2000} />{errors.message && <span className="field-error">{errors.message}</span>}</label>
+                    <input className="hp-field" type="text" name="telephone" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+                  </div>
+                  <button type="submit" disabled={sending}>{sending ? "Envoi en cours…" : "Envoyer"}</button>
+                  {submitError && <p className="form-error" role="alert">{submitError}</p>}
+                </>
+              )}
             </form>
           </div>
           <footer><a className="brand" href="#introduction">TRADEMARK</a><div><span>© 2026</span><span>Mentions légales</span><span>Confidentialité</span></div></footer>
