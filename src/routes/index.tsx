@@ -124,6 +124,12 @@ function Index() {
     };
     // Le saut d'ancre natif visait une position déjà figée : on utilise la
     // position naturelle mesurée de la section visée, dans les deux sens.
+    const destinationOf = (target: HTMLElement) => {
+      const base = naturalTops.get(target) ?? target.offsetTop;
+      const limit = document.documentElement.scrollHeight - window.innerHeight;
+      return Math.max(0, Math.min(limit, base - (desktop.matches ? 0 : header.offsetHeight)));
+    };
+    let settle: number | undefined;
     const onAnchorClick = (event: MouseEvent) => {
       const link = (event.target as HTMLElement | null)?.closest<HTMLAnchorElement>('a[href^="#"]');
       if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey) return;
@@ -131,13 +137,20 @@ function Index() {
       const target = document.getElementById(id);
       if (!target) return;
       event.preventDefault();
-      const natural = naturalTops.get(target);
-      const base = natural ?? target.offsetTop;
-      const limit = document.documentElement.scrollHeight - window.innerHeight;
-      const top = Math.max(0, Math.min(limit, base - (desktop.matches ? 0 : header.offsetHeight)));
-      window.scrollTo({ top, behavior: "smooth" });
+      // On laisse le clic se terminer avant de défiler, puis on vérifie
+      // l'arrivée : le repositionnement automatique du navigateur pouvait
+      // interrompre le défilement et laisser la page entre deux sections.
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: destinationOf(target), behavior: "smooth" });
+        window.clearTimeout(settle);
+        settle = window.setTimeout(() => {
+          const wanted = destinationOf(target);
+          if (Math.abs(window.scrollY - wanted) > 2) window.scrollTo({ top: wanted });
+        }, 900);
+      });
       history.replaceState(null, "", `#${id}`);
     };
+
 
 
     calibrate();
