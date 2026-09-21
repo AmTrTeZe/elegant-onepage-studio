@@ -45,24 +45,18 @@ function Index() {
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    const panels = Array.from(document.querySelectorAll<HTMLElement>(".panel"));
+    const items = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          const items = Array.from(
-            entry.target.querySelectorAll<HTMLElement>("[data-reveal]"),
-          );
-          items.forEach((item, index) => {
-            item.style.setProperty("--stagger", `${index * 110}ms`);
-            item.classList.add("is-visible");
-          });
+          entry.target.classList.add("is-visible");
           observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.18 },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
     );
-    panels.forEach((panel) => observer.observe(panel));
+    items.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
   }, []);
 
@@ -129,9 +123,9 @@ function Index() {
           <h1 className="display display-intro" data-reveal="title">
             <span>Et si vos angles</span><span>morts devenaient</span><span>des relais de</span><span>croissance ?</span>
           </h1>
-          <div className="intro-footer" data-reveal="body">
-            <p>TRADEMARK est un cabinet spécialisé dans l’introduction de technologies à fort impact sur des marchés internationaux à fort potentiel, au-delà des géographies prioritaires de leurs éditeurs.</p>
-            <a className="text-link" href="#contact">Parlons-en <span aria-hidden="true">→</span></a>
+          <div className="intro-footer">
+            <p data-reveal="body">TRADEMARK est un cabinet spécialisé dans l’introduction de technologies à fort impact sur des marchés internationaux à fort potentiel, au-delà des géographies prioritaires de leurs éditeurs.</p>
+            <a className="text-link" href="#contact" data-reveal="lead">Parlons-en <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </section>
@@ -140,9 +134,9 @@ function Index() {
         <div className="page-shell">
           <SectionHeader number="02" title="Contexte" side="Le constat" />
            <h2 className="display display-section" data-reveal="title"><span>La croissance</span><span>impose des choix.</span></h2>
-           <div className="two-cols body-copy" data-reveal="body">
-            <p>Pour les startups technologiques, la croissance impose des choix. Dans un environnement où les financements sont plus exigeants et la trajectoire vers la rentabilité davantage scrutée, les ressources se concentrent naturellement sur quelques marchés prioritaires capables de soutenir rapidement le passage à l’échelle.</p>
-            <p>Cette discipline est nécessaire. Mais elle laisse aussi de côté des marchés où les besoins existent, où le potentiel commercial est réel et que les équipes internes ne peuvent raisonnablement adresser sans présence, réseau ou relais local.</p>
+           <div className="two-cols body-copy reveal-sequence">
+            <p data-reveal="body">Pour les startups technologiques, la croissance impose des choix. Dans un environnement où les financements sont plus exigeants et la trajectoire vers la rentabilité davantage scrutée, les ressources se concentrent naturellement sur quelques marchés prioritaires capables de soutenir rapidement le passage à l’échelle.</p>
+            <p data-reveal="body">Cette discipline est nécessaire. Mais elle laisse aussi de côté des marchés où les besoins existent, où le potentiel commercial est réel et que les équipes internes ne peuvent raisonnablement adresser sans présence, réseau ou relais local.</p>
           </div>
            <p className="closing-line" data-reveal="lead">C’est précisément là que <strong>TRADEMARK</strong> intervient.</p>
         </div>
@@ -152,9 +146,9 @@ function Index() {
         <div className="page-shell">
           <SectionHeader number="03" title="Approche" side="Méthode" />
            <h2 className="display display-section" data-reveal="title"><span>Partir du besoin, pas</span><span>de la technologie</span></h2>
-           <div className="two-cols body-copy approach-copy" data-reveal="body">
-            <p>Notre ADN de cabinet indépendant spécialisé en stratégie d’innovation et en performance des organisations structure notre approche : nous partons des frictions opérationnelles rencontrées par les entreprises locales pour identifier les technologies capables de réellement les résoudre.</p>
-            <p>Cette exigence nous permet de concentrer nos efforts sur les technologies dont la proposition de valeur répond à un besoin concret et dont l’impact peut être rapidement démontré.</p>
+           <div className="two-cols body-copy approach-copy reveal-sequence">
+            <p data-reveal="body">Notre ADN de cabinet indépendant spécialisé en stratégie d’innovation et en performance des organisations structure notre approche : nous partons des frictions opérationnelles rencontrées par les entreprises locales pour identifier les technologies capables de réellement les résoudre.</p>
+            <p data-reveal="body">Cette exigence nous permet de concentrer nos efforts sur les technologies dont la proposition de valeur répond à un besoin concret et dont l’impact peut être rapidement démontré.</p>
           </div>
            <p className="micro-title" data-reveal="label">Nos critères de sélection</p>
           <div className="criteria-grid">
@@ -171,9 +165,9 @@ function Index() {
         <div className="page-shell">
           <SectionHeader number="04" title="Réseau" side="Accès aux décideurs" />
            <h2 className="display display-section" data-reveal="title"><span>Business enabler for</span><span>new markets</span></h2>
-           <div className="network-copy" data-reveal="body">
-            <p className="lead">Pénétrer un nouveau marché exige plus qu’une démarche commerciale : il faut en comprendre les acteurs, les circuits de décision et disposer des bons relais.</p>
-            <div className="body-copy"><p>L’expérience de nos équipes au sein de grands réseaux internationaux de conseil et de communication nous a permis de constituer, dans plusieurs pays, un réseau de contacts et de relais locaux de confiance, profondément ancrés dans leurs écosystèmes économiques.</p><p>Ces relais nous donnent accès aux bons niveaux de décision des entreprises leaders, nous aident à qualifier les enjeux locaux et nous permettent d’identifier plus rapidement les opportunités pertinentes, en organisant des introductions auprès des directions générales, technologiques et opérationnelles concernées.</p></div>
+           <div className="network-copy">
+            <p className="lead" data-reveal="lead">Pénétrer un nouveau marché exige plus qu’une démarche commerciale : il faut en comprendre les acteurs, les circuits de décision et disposer des bons relais.</p>
+            <div className="body-copy reveal-sequence"><p data-reveal="body">L’expérience de nos équipes au sein de grands réseaux internationaux de conseil et de communication nous a permis de constituer, dans plusieurs pays, un réseau de contacts et de relais locaux de confiance, profondément ancrés dans leurs écosystèmes économiques.</p><p data-reveal="body">Ces relais nous donnent accès aux bons niveaux de décision des entreprises leaders, nous aident à qualifier les enjeux locaux et nous permettent d’identifier plus rapidement les opportunités pertinentes, en organisant des introductions auprès des directions générales, technologiques et opérationnelles concernées.</p></div>
           </div>
            <p className="micro-title" data-reveal="label">Trois leviers combinés</p>
           <div className="lever-grid">
@@ -189,9 +183,9 @@ function Index() {
           <SectionHeader number="05" title="Intervention" side="Périmètre" />
            <h2 className="display display-section" data-reveal="title"><span>Local access for</span><span>global technologies</span></h2>
            <p className="intervention-intro body-copy" data-reveal="body">TRADEMARK permet aux entreprises technologiques d’aborder des marchés qu’elles ne pourraient pas nécessairement adresser avec leurs seules équipes, sans engager en amont les coûts de prospection, de réseau et de présence locale qu’exigerait une approche directe.</p>
-           <div className="scope-grid" data-reveal="item">
-            <div><p className="micro-title">Ce que nous prenons en charge</p><ul><li>Identification des opportunités</li><li>Qualification des comptes</li><li>Accès aux décideurs</li><li>Organisation des introductions</li></ul></div>
-            <div className="muted-scope"><p className="micro-title">Ce qui vous revient</p><ul><li>Modèle de déploiement</li><li>Contractualisation</li><li>Delivery et support</li><li>Développement du marché</li></ul></div>
+           <div className="scope-grid reveal-sequence">
+            <div data-reveal="item"><p className="micro-title">Ce que nous prenons en charge</p><ul><li>Identification des opportunités</li><li>Qualification des comptes</li><li>Accès aux décideurs</li><li>Organisation des introductions</li></ul></div>
+            <div className="muted-scope" data-reveal="item"><p className="micro-title">Ce qui vous revient</p><ul><li>Modèle de déploiement</li><li>Contractualisation</li><li>Delivery et support</li><li>Développement du marché</li></ul></div>
           </div>
            <p className="closing-line" data-reveal="lead">Notre rôle s’arrête là où commence celui de l’éditeur.</p>
         </div>
@@ -202,15 +196,15 @@ function Index() {
           <SectionHeader number="06" title="Contact" side="Paris · Casablanca · Abidjan" />
            <p className="contact-lead" data-reveal="lead">Vous développez une technologie éprouvée, à ROI rapide, et certains marchés<br className="desktop-break" /> restent hors de vos priorités immédiates ?</p>
            <h2 className="display contact-title" data-reveal="title">Parlons-en.</h2>
-          <div className="contact-grid">
-             <aside className="offices" data-reveal="body">
+          <div className="contact-grid reveal-sequence">
+             <aside className="offices" data-reveal="item">
               <p className="micro-title">Nos bureaux</p>
               <h3>Paris</h3><p>134-136 boulevard Brune<br />75014 Paris</p>
               <h3>Casablanca</h3><p>Appartement n°4, Résidence Hamza<br />Quartier Palmier — 20340</p>
               <h3>Abidjan</h3><p>II Plateaux Vallon, villa lot 522<br />parcelle 222, Cocody</p>
               <a href="mailto:contact@trademark-conseil.fr">contact@trademark-conseil.fr</a>
             </aside>
-             <form onSubmit={submit} data-reveal="body">
+             <form onSubmit={submit} data-reveal="item">
               <p className="micro-title">Écrivez-nous</p>
               <div className="form-grid">
                 <label>Prénom<input name="firstName" required /></label>
