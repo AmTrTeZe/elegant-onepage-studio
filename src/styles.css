@@ -60,7 +60,9 @@ a { color: inherit; text-decoration: none; }
 .display-section { padding-top: 60px; font-size: clamp(50px, 6.25vw, 90px); }
 .intro { min-height: 100svh; }
 .intro-footer { margin-top: clamp(46px, 7vh, 92px); padding-top: 29px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-end; }
-.intro-footer p { max-width: 690px; margin: 0; font-size: 18px; line-height: 1.55; }
+.intro-footer p { max-width: calc(clamp(48px, 6.6vw, 94px) * 10.9); margin: 0; font-size: 18px; font-weight: 800; line-height: 1.55; }
+/* Le lien s'aligne avec la dernière ligne du paragraphe, légèrement descendu */
+.intro-footer .text-link { margin-bottom: -3px; }
 .text-link { position: relative; margin-bottom: 4px; text-transform: uppercase; font-size: 12px; font-weight: 600; letter-spacing: .18em; }
 
 .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(50px, 9vw, 130px); }
