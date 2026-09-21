@@ -73,7 +73,7 @@ function Index() {
           theme = panel.classList.contains("panel-dark") ? "dark" : "light";
         }
       }
-      header.dataset.theme = theme;
+      header.dataset["theme"] = theme;
     };
     sync();
     window.addEventListener("scroll", sync, { passive: true });
