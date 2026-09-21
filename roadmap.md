@@ -1,1 +1,1 @@
-- [ ] Créer une version anglaise complète et soignée, avec le même design, les mêmes effets et les mêmes fonctionnalités que la version française.
+- [x] Créer une version anglaise complète et soignée, avec le même design, les mêmes effets et les mêmes fonctionnalités que la version française.

@@ -351,7 +351,7 @@ function Index() {
       const response = await fetch("/contact.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...fields, telephone: String(data.get("telephone") ?? "") }),
+        body: JSON.stringify({ ...fields, telephone: String(data.get("telephone") ?? ""), language: "en" }),
       });
       const result = (await response.json()) as {
         ok: boolean;
