@@ -109,15 +109,31 @@ function Index() {
       }
       header.dataset["theme"] = theme;
     };
+    // Les sections étant collantes, le saut d'ancre natif visait une position
+    // déjà figée : on calcule nous-même le haut réel de la section visée.
+    const onAnchorClick = (event: MouseEvent) => {
+      const link = (event.target as HTMLElement | null)?.closest<HTMLAnchorElement>('a[href^="#"]');
+      if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey) return;
+      const id = link.getAttribute("href")!.slice(1);
+      const target = document.getElementById(id);
+      if (!target) return;
+      event.preventDefault();
+      const top = Math.max(0, target.offsetTop - (desktop.matches ? 0 : header.offsetHeight));
+      window.scrollTo({ top, behavior: "smooth" });
+      history.replaceState(null, "", `#${id}`);
+    };
+
     calibrate();
     sync();
     window.addEventListener("scroll", sync, { passive: true });
     window.addEventListener("resize", calibrate);
     window.addEventListener("resize", sync);
+    document.addEventListener("click", onAnchorClick);
     return () => {
       window.removeEventListener("scroll", sync);
       window.removeEventListener("resize", calibrate);
       window.removeEventListener("resize", sync);
+      document.removeEventListener("click", onAnchorClick);
     };
   }, []);
 
