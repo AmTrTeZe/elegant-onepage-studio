@@ -320,7 +320,7 @@ function Index() {
           </div>
            <p className="micro-title" data-reveal="label">Trois leviers combinés</p>
           <div className="lever-grid">
-             <article data-reveal="item"><h3>Compréhension<br />du marché</h3><p>Transformer un marché peu ou pas adressé en opportunité de croissance.</p></article>
+             <article data-reveal="item"><h3>Compréhension<br />du marché</h3></article>
              <article data-reveal="item"><h3>Relais<br />locaux</h3></article>
              <article data-reveal="item"><h3>Accès aux<br />décideurs</h3></article>
           </div>
