@@ -167,17 +167,23 @@ function Index() {
       if (item !== introFooter) observer.observe(item);
     });
 
-    // Le maintien ne démarre qu'une fois APPROCHE calée en haut de l'écran,
-    // donc jamais pendant la transition CONTEXTE → APPROCHE.
+    // Une section courte est prête lorsqu'elle est calée en haut. Une section
+    // plus haute que l'écran doit d'abord défiler jusqu'à son bas : le maintien
+    // ne peut donc pas masquer sa dernière partie.
+    const isReadingEdgeReached = (panel: HTMLElement) => {
+      const rect = panel.getBoundingClientRect();
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+      return panel.offsetHeight > viewportHeight + 2
+        ? rect.bottom <= viewportHeight + 2
+        : rect.top <= 2;
+    };
     const watchApproche = () => {
       if (approcheDone || !approche) return;
-      const top = approche.getBoundingClientRect().top;
-      if (top <= 2) holdApproche();
+      if (isReadingEdgeReached(approche)) holdApproche();
     };
     const watchReseau = () => {
       if (reseauDone || !reseau) return;
-      const top = reseau.getBoundingClientRect().top;
-      if (top <= 2) holdReseau();
+      if (isReadingEdgeReached(reseau)) holdReseau();
     };
     window.addEventListener("scroll", watchApproche, { passive: true });
     watchApproche();
@@ -215,15 +221,25 @@ function Index() {
 
     // Cale chaque section : une section plus haute que l'écran ne se fige
     // qu'une fois son bas atteint, pour être lue en entier avant d'être recouverte.
+    let calibrationFrame: number | undefined;
     const calibrate = () => {
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
       panels.forEach((panel) => {
         if (!desktop.matches) {
           panel.style.top = "";
           return;
         }
-        panel.style.top = `${Math.min(0, window.innerHeight - panel.offsetHeight)}px`;
+        panel.style.top = `${Math.min(0, viewportHeight - panel.offsetHeight)}px`;
       });
       measure();
+    };
+    const scheduleCalibration = () => {
+      if (calibrationFrame !== undefined) cancelAnimationFrame(calibrationFrame);
+      calibrationFrame = requestAnimationFrame(() => {
+        calibrate();
+        sync();
+        calibrationFrame = undefined;
+      });
     };
 
     const sync = () => {
@@ -295,15 +311,20 @@ function Index() {
 
     calibrate();
     sync();
+    const resizeObserver = new ResizeObserver(scheduleCalibration);
+    panels.forEach((panel) => resizeObserver.observe(panel));
+    document.fonts?.ready.then(scheduleCalibration).catch(() => undefined);
     window.addEventListener("scroll", sync, { passive: true });
-    window.addEventListener("resize", calibrate);
-    window.addEventListener("resize", sync);
+    window.addEventListener("resize", scheduleCalibration);
+    window.visualViewport?.addEventListener("resize", scheduleCalibration);
     document.addEventListener("click", onAnchorClick);
     return () => {
       window.removeEventListener("scroll", sync);
-      window.removeEventListener("resize", calibrate);
-      window.removeEventListener("resize", sync);
+      window.removeEventListener("resize", scheduleCalibration);
+      window.visualViewport?.removeEventListener("resize", scheduleCalibration);
       document.removeEventListener("click", onAnchorClick);
+      resizeObserver.disconnect();
+      if (calibrationFrame !== undefined) cancelAnimationFrame(calibrationFrame);
       if (scrollFrame !== undefined) cancelAnimationFrame(scrollFrame);
     };
   }, []);

@@ -244,6 +244,7 @@ footer div { display: flex; gap: 32px; text-transform: uppercase; font-size: 9px
   .site-header nav a { font-size: 8px; letter-spacing: .1em; }
   .brand { font-size: 11px; }
   .panel { position: relative; top: auto; padding: 66px 20px 48px; min-height: auto; margin-bottom: 0; box-shadow: 0 -12px 30px color-mix(in oklab, var(--ink) 6%, transparent); }
+  .panel:not(.contact) { margin-bottom: 0; }
   .intro { min-height: 100svh; }
   .section-header { padding-top: 48px; font-size: 8px; letter-spacing: .14em; gap: 20px; }
   .section-header span:last-child { text-align: right; }
