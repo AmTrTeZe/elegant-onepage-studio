@@ -53,11 +53,11 @@ a { color: inherit; text-decoration: none; }
 
 .display { margin: 0; text-transform: uppercase; font-weight: 800; letter-spacing: 0; line-height: .93; }
 .display span { display: block; }
-.display-intro { padding-top: 53px; max-width: 1100px; font-size: clamp(56px, 7.35vw, 106px); }
+.display-intro { padding-top: 53px; max-width: 1100px; font-size: clamp(52px, 7vw, 100px); }
 .display-section { padding-top: 60px; font-size: clamp(50px, 6.25vw, 90px); }
 .intro { min-height: 100svh; }
 .intro-footer { margin-top: clamp(78px, 12vh, 150px); padding-top: 29px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: flex-end; }
-.intro-footer p { max-width: 670px; margin: 0; font-size: 16px; line-height: 1.55; }
+.intro-footer p { max-width: 670px; margin: 0; font-size: 17px; line-height: 1.55; }
 .text-link { position: relative; margin-bottom: 4px; text-transform: uppercase; font-size: 12px; font-weight: 600; letter-spacing: .18em; }
 
 .two-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(50px, 9vw, 130px); }
