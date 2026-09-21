@@ -157,7 +157,7 @@ footer div { display: flex; gap: 32px; text-transform: uppercase; font-size: 9px
   from { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateX(-0.035em); }
   to { opacity: 1; clip-path: inset(0 -2% 0 0); transform: translateX(0); }
 }
-.display-sweep[data-reveal="title"] span { opacity: 1; }
+.display-sweep[data-reveal="title"] span { opacity: 0; }
 .display-sweep[data-reveal="title"].is-visible span { animation: reveal-sweep 2s cubic-bezier(.25,.46,.45,.94) both; animation-delay: calc(var(--stagger, 0ms) + 480ms); }
 .display-sweep[data-reveal="title"].is-visible span:nth-child(2) { animation-delay: calc(var(--stagger, 0ms) + 880ms); }
 .display-sweep[data-reveal="title"].is-visible span:nth-child(3) { animation-delay: calc(var(--stagger, 0ms) + 1280ms); }
