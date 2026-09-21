@@ -57,18 +57,27 @@ function Index() {
       item.style.setProperty("--stagger", `${Math.min(index, 5) * 110}ms`);
     });
 
+    const introFooter = document.querySelector<HTMLElement>(".intro-footer");
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          (entry.target as HTMLElement).classList.add("is-visible");
+          const target = entry.target as HTMLElement;
+          target.classList.add("is-visible");
+          // Le bloc « TRADEMARK est un cabinet… » suit la fin de l'animation
+          // du grand titre : il est révélé en même temps que le titre.
+          if (target.classList.contains("display-sweep") && introFooter) {
+            introFooter.classList.add("is-visible");
+          }
           observer.unobserve(entry.target);
         });
       },
       // On déclenche seulement quand l'élément entre réellement dans l'écran.
       { threshold: 0.01, rootMargin: "-90px 0px -12% 0px" },
     );
-    items.forEach((item) => observer.observe(item));
+    items.forEach((item) => {
+      if (item !== introFooter) observer.observe(item);
+    });
     return () => observer.disconnect();
   }, []);
 
