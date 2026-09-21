@@ -1,10 +1,10 @@
 # Animations éditoriales et transitions de sections
 
 ## Objectif
-Donner à chaque famille de texte une mise en place distincte, rendre la navigation constamment ivoire et créer un effet de recouvrement naturel entre les sections.
+Animer l’apparition des textes à l’arrivée de chaque section, sans modifier les typographies, rendre la navigation constamment ivoire et créer un effet de recouvrement naturel entre les sections.
 
 ## Réalisation
-- Conserver strictement la mise en page, Archivo, l’ivoire et le noir existants.
+- Conserver strictement les typographies, leurs tailles et graisses, la mise en page, l’ivoire et le noir existants.
 - Attribuer des animations sobres selon la fonction : grands titres révélés ligne par ligne, chapôs en translation douce, paragraphes en fondu, labels par ouverture horizontale, listes et critères en cascade.
 - Faire apparaître la barre de navigation sur un fond ivoire opaque avec texte noir, quelle que soit la section traversée.
 - Transformer les sections en panneaux successifs qui viennent recouvrir la précédente au défilement, avec une profondeur très légère et sans effet spectaculaire.
