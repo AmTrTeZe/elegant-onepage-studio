@@ -82,6 +82,34 @@ function Index() {
       window.removeEventListener("touchmove", blockTouch);
       window.removeEventListener("keydown", blockKeys);
     };
+    // Section RÉSEAU : même principe — une fois la section calée en haut,
+    // la descente vers INTERVENTION est suspendue le temps que les trois
+    // leviers finissent de se placer. Remonter reste possible.
+    const reseau = document.getElementById("reseau");
+    let reseauLocked = false;
+    let reseauDone = reduceMotion;
+    let reseauUnlockTimer: ReturnType<typeof setTimeout> | undefined;
+    const releaseReseau = () => {
+      if (!reseauLocked) return;
+      reseauLocked = false;
+      window.removeEventListener("wheel", blockDown);
+      window.removeEventListener("touchmove", blockTouch);
+      window.removeEventListener("keydown", blockKeys);
+    };
+    const holdReseau = () => {
+      if (reseauDone || reseauLocked) return;
+      reseauDone = true;
+      reseauLocked = true;
+      window.addEventListener("wheel", blockDown, { passive: false });
+      window.addEventListener("touchmove", blockTouch, { passive: false });
+      window.addEventListener("keydown", blockKeys);
+      reseau
+        ?.querySelectorAll<HTMLElement>("[data-reveal]")
+        .forEach((el) => el.classList.add("is-visible"));
+      // Dernier levier (700ms) + son animation (1100ms).
+      reseauUnlockTimer = setTimeout(releaseReseau, 1900);
+    };
+
     const holdApproche = () => {
       if (approcheDone || approcheLocked) return;
       approcheDone = true;
