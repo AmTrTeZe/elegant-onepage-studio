@@ -66,16 +66,20 @@ function Index() {
     let approcheLocked = false;
     let approcheDone = reduceMotion;
     let unlockTimer: ReturnType<typeof setTimeout> | undefined;
-    const block = (event: Event) => event.preventDefault();
+    // On ne bloque que la descente vers RÉSEAU : remonter reste possible.
+    const blockDown = (event: WheelEvent) => {
+      if (event.deltaY > 0) event.preventDefault();
+    };
+    const blockTouch = (event: Event) => event.preventDefault();
     const blockKeys = (event: KeyboardEvent) => {
-      const keys = ["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " ", "Spacebar"];
+      const keys = ["ArrowDown", "PageDown", "End", " ", "Spacebar"];
       if (keys.includes(event.key)) event.preventDefault();
     };
     const releaseApproche = () => {
       if (!approcheLocked) return;
       approcheLocked = false;
-      window.removeEventListener("wheel", block);
-      window.removeEventListener("touchmove", block);
+      window.removeEventListener("wheel", blockDown);
+      window.removeEventListener("touchmove", blockTouch);
       window.removeEventListener("keydown", blockKeys);
     };
     const holdApproche = () => {
