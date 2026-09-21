@@ -163,6 +163,16 @@ footer div { display: flex; gap: 32px; text-transform: uppercase; font-size: 9px
 [data-reveal="lead"].is-visible { animation: reveal-lead .95s var(--stagger, 0ms) cubic-bezier(.16,1,.3,1) both; }
 [data-reveal="label"].is-visible { animation: reveal-label .75s var(--stagger, 0ms) cubic-bezier(.16,1,.3,1) both; }
 [data-reveal="item"].is-visible { animation: reveal-item .8s var(--stagger, 0ms) cubic-bezier(.22,1,.36,1) both; }
+/* Blocs critères et leviers : apparition un à un, sobre et fluide */
+.criteria-grid [data-reveal="item"].is-visible,
+.lever-grid [data-reveal="item"].is-visible { animation: reveal-item 1.1s cubic-bezier(.22,1,.36,1) both; animation-delay: 0ms; }
+.criteria-grid [data-reveal="item"]:nth-child(2).is-visible,
+.lever-grid [data-reveal="item"]:nth-child(2).is-visible { animation-delay: 350ms; }
+.criteria-grid [data-reveal="item"]:nth-child(3).is-visible,
+.lever-grid [data-reveal="item"]:nth-child(3).is-visible { animation-delay: 700ms; }
+.criteria-grid [data-reveal="item"]:nth-child(4).is-visible { animation-delay: 1050ms; }
+.criteria-grid [data-reveal="item"]:nth-child(5).is-visible { animation-delay: 1400ms; }
+.criteria-grid [data-reveal="item"]:nth-child(6).is-visible { animation-delay: 1750ms; }
 
 @media (max-width: 760px) {
   .site-header { height: 66px; padding-inline: 20px; }
