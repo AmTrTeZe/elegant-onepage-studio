@@ -87,6 +87,18 @@ function Index() {
     const panels = Array.from(document.querySelectorAll<HTMLElement>(".panel"));
     const desktop = window.matchMedia("(min-width: 761px)");
 
+    // Position naturelle de chaque section dans le document : les sections
+    // étant collantes, offsetTop suit la position figée et devient inutilisable.
+    const naturalTops = new Map<HTMLElement, number>();
+    const measure = () => {
+      let cursor = 0;
+      panels.forEach((panel) => {
+        naturalTops.set(panel, cursor);
+        const gap = parseFloat(getComputedStyle(panel).marginBottom) || 0;
+        cursor += panel.offsetHeight + gap;
+      });
+    };
+
     // Cale chaque section : une section plus haute que l'écran ne se fige
     // qu'une fois son bas atteint, pour être lue en entier avant d'être recouverte.
     const calibrate = () => {
@@ -97,6 +109,7 @@ function Index() {
         }
         panel.style.top = `${Math.min(0, window.innerHeight - panel.offsetHeight)}px`;
       });
+      measure();
     };
 
     const sync = () => {
@@ -109,8 +122,14 @@ function Index() {
       }
       header.dataset["theme"] = theme;
     };
-    // Les sections étant collantes, le saut d'ancre natif visait une position
-    // déjà figée : on calcule nous-même le haut réel de la section visée.
+    // Le saut d'ancre natif visait une position déjà figée : on utilise la
+    // position naturelle mesurée de la section visée, dans les deux sens.
+    const destinationOf = (target: HTMLElement) => {
+      const base = naturalTops.get(target) ?? target.offsetTop;
+      const limit = document.documentElement.scrollHeight - window.innerHeight;
+      return Math.max(0, Math.min(limit, base - (desktop.matches ? 0 : header.offsetHeight)));
+    };
+    let settle: number | undefined;
     const onAnchorClick = (event: MouseEvent) => {
       const link = (event.target as HTMLElement | null)?.closest<HTMLAnchorElement>('a[href^="#"]');
       if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey) return;
@@ -118,10 +137,21 @@ function Index() {
       const target = document.getElementById(id);
       if (!target) return;
       event.preventDefault();
-      const top = Math.max(0, target.offsetTop - (desktop.matches ? 0 : header.offsetHeight));
-      window.scrollTo({ top, behavior: "smooth" });
+      // On laisse le clic se terminer avant de défiler, puis on vérifie
+      // l'arrivée : le repositionnement automatique du navigateur pouvait
+      // interrompre le défilement et laisser la page entre deux sections.
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: destinationOf(target), behavior: "smooth" });
+        window.clearTimeout(settle);
+        settle = window.setTimeout(() => {
+          const wanted = destinationOf(target);
+          if (Math.abs(window.scrollY - wanted) > 2) window.scrollTo({ top: wanted });
+        }, 900);
+      });
       history.replaceState(null, "", `#${id}`);
     };
+
+
 
     calibrate();
     sync();
