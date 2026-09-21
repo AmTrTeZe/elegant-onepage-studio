@@ -86,8 +86,8 @@ function Index() {
       if (approcheDone || approcheLocked) return;
       approcheDone = true;
       approcheLocked = true;
-      window.addEventListener("wheel", block, { passive: false });
-      window.addEventListener("touchmove", block, { passive: false });
+      window.addEventListener("wheel", blockDown, { passive: false });
+      window.addEventListener("touchmove", blockTouch, { passive: false });
       window.addEventListener("keydown", blockKeys);
       // Les blocs de la section sont révélés immédiatement pendant le maintien.
       approche
