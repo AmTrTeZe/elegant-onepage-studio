@@ -45,24 +45,30 @@ function Index() {
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    const panels = Array.from(document.querySelectorAll<HTMLElement>(".panel"));
+    const items = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-reveal]"),
+    );
+    // Cascade par section : l'ordre local sert de décalage d'apparition.
+    const counters = new Map<Element, number>();
+    items.forEach((item) => {
+      const panel = item.closest(".panel") ?? document.body;
+      const index = counters.get(panel) ?? 0;
+      counters.set(panel, index + 1);
+      item.style.setProperty("--stagger", `${Math.min(index, 5) * 110}ms`);
+    });
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          const items = Array.from(
-            entry.target.querySelectorAll<HTMLElement>("[data-reveal]"),
-          );
-          items.forEach((item, index) => {
-            item.style.setProperty("--stagger", `${index * 110}ms`);
-            item.classList.add("is-visible");
-          });
+          (entry.target as HTMLElement).classList.add("is-visible");
           observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.18 },
+      // On déclenche seulement quand l'élément entre réellement dans l'écran.
+      { threshold: 0.01, rootMargin: "-90px 0px -12% 0px" },
     );
-    panels.forEach((panel) => observer.observe(panel));
+    items.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
   }, []);
 
