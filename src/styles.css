@@ -161,7 +161,18 @@ footer div { display: flex; gap: 32px; text-transform: uppercase; font-size: 9px
 .display-sweep[data-reveal="title"] span:nth-child(2) { animation-delay: 880ms; }
 .display-sweep[data-reveal="title"] span:nth-child(3) { animation-delay: 1280ms; }
 .display-sweep[data-reveal="title"] span:nth-child(4) { animation-delay: 1680ms; }
-.intro-footer[data-reveal="body"] { animation: reveal-body 1.15s 3250ms cubic-bezier(.22,1,.36,1) both; }
+/* Une fois le texte « TRADEMARK est un cabinet… » affiché, le titre diminue
+   d'un corps et le bloc ligne + texte remonte se rapprocher du titre */
+@keyframes settle-intro-title {
+  from { font-size: clamp(52px, 7vw, 100px); }
+  to { font-size: clamp(48px, 6.6vw, 94px); }
+}
+@keyframes settle-intro-space {
+  from { margin-top: clamp(46px, 7vh, 92px); }
+  to { margin-top: clamp(22px, 3.2vh, 48px); }
+}
+.display-sweep[data-reveal="title"].is-visible { animation: settle-intro-title .9s 4400ms cubic-bezier(.22,1,.36,1) both; }
+.intro-footer[data-reveal="body"] { animation: reveal-body 1.15s 3250ms cubic-bezier(.22,1,.36,1) both, settle-intro-space .9s 4400ms cubic-bezier(.22,1,.36,1) both; }
 [data-reveal="body"]:not(.intro-footer).is-visible { animation: reveal-body .9s var(--stagger, 0ms) cubic-bezier(.22,1,.36,1) both; }
 [data-reveal="lead"].is-visible { animation: reveal-lead .95s var(--stagger, 0ms) cubic-bezier(.16,1,.3,1) both; }
 [data-reveal="label"].is-visible { animation: reveal-label .75s var(--stagger, 0ms) cubic-bezier(.16,1,.3,1) both; }
@@ -187,6 +198,8 @@ footer div { display: flex; gap: 32px; text-transform: uppercase; font-size: 9px
   .section-header { padding-top: 48px; font-size: 8px; letter-spacing: .14em; gap: 20px; }
   .section-header span:last-child { text-align: right; }
   .display-intro, .display-section { padding-top: 42px; font-size: clamp(42px, 12.5vw, 62px); overflow-wrap: anywhere; }
+  .display-sweep[data-reveal="title"].is-visible { animation: none; }
+  .intro-footer[data-reveal="body"] { animation: reveal-body 1.15s 3250ms cubic-bezier(.22,1,.36,1) both; }
   .intro-footer { margin-top: 80px; align-items: flex-start; gap: 30px; flex-direction: column; }
   .intro-footer p, .body-copy { font-size: 14px; }
   .two-cols, .network-copy, .scope-grid, .contact-grid { grid-template-columns: 1fr; gap: 28px; }
