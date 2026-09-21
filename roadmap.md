@@ -1,1 +1,1 @@
-- [ ] Recaler toutes les sections sur mobile, tablette et ordinateur pour que chaque contenu soit entièrement visible avant le recouvrement.
+- [x] Recaler toutes les sections sur mobile, tablette et ordinateur pour que chaque contenu soit entièrement visible avant le recouvrement.
