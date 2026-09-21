@@ -1,5 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+
+type FieldName = "firstName" | "lastName" | "company" | "email" | "message";
+type FieldErrors = Partial<Record<FieldName, string>>;
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+function validate(fields: Record<FieldName, string>): FieldErrors {
+  const errors: FieldErrors = {};
+  if (!fields.firstName.trim()) errors.firstName = "Merci d’indiquer votre prénom.";
+  if (!fields.lastName.trim()) errors.lastName = "Merci d’indiquer votre nom.";
+  if (!fields.company.trim()) errors.company = "Merci d’indiquer le nom de votre entreprise.";
+  if (!EMAIL_PATTERN.test(fields.email.trim()))
+    errors.email = "Merci d’indiquer une adresse e-mail valide.";
+  if (!fields.message.trim()) errors.message = "Merci de préciser l’objet de votre demande.";
+  return errors;
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
