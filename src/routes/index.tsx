@@ -45,19 +45,24 @@ function Index() {
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    const items = document.querySelectorAll<HTMLElement>("[data-reveal]");
+    const panels = Array.from(document.querySelectorAll<HTMLElement>(".panel"));
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
+          if (!entry.isIntersecting) return;
+          const items = Array.from(
+            entry.target.querySelectorAll<HTMLElement>("[data-reveal]"),
+          );
+          items.forEach((item, index) => {
+            item.style.setProperty("--stagger", `${index * 110}ms`);
+            item.classList.add("is-visible");
+          });
+          observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.12 },
+      { threshold: 0.18 },
     );
-    items.forEach((item) => observer.observe(item));
+    panels.forEach((panel) => observer.observe(panel));
     return () => observer.disconnect();
   }, []);
 
