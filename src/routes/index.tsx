@@ -59,6 +59,10 @@ function SectionHeader({ number, title, side }: { number: string; title: string;
 
 function Index() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [errors, setErrors] = useState<FieldErrors>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const items = Array.from(
