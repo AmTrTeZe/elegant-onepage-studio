@@ -1,5 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
+
+type FieldName = "firstName" | "lastName" | "company" | "email" | "message";
+type FieldErrors = Partial<Record<FieldName, string>>;
+
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+function validate(fields: Record<FieldName, string>): FieldErrors {
+  const errors: FieldErrors = {};
+  if (!fields.firstName.trim()) errors.firstName = "Merci d’indiquer votre prénom.";
+  if (!fields.lastName.trim()) errors.lastName = "Merci d’indiquer votre nom.";
+  if (!fields.company.trim()) errors.company = "Merci d’indiquer le nom de votre entreprise.";
+  if (!EMAIL_PATTERN.test(fields.email.trim()))
+    errors.email = "Merci d’indiquer une adresse e-mail valide.";
+  if (!fields.message.trim()) errors.message = "Merci de préciser l’objet de votre demande.";
+  return errors;
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -43,6 +59,10 @@ function SectionHeader({ number, title, side }: { number: string; title: string;
 
 function Index() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [errors, setErrors] = useState<FieldErrors>({});
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const items = Array.from(
@@ -287,9 +307,50 @@ function Index() {
     };
   }, []);
 
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSent(true);
+    if (sending) return;
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const fields: Record<FieldName, string> = {
+      firstName: String(data.get("firstName") ?? ""),
+      lastName: String(data.get("lastName") ?? ""),
+      company: String(data.get("company") ?? ""),
+      email: String(data.get("email") ?? ""),
+      message: String(data.get("message") ?? ""),
+    };
+    const found = validate(fields);
+    setErrors(found);
+    setSubmitError(null);
+    if (Object.keys(found).length > 0) return;
+
+    setSending(true);
+    try {
+      const response = await fetch("/contact.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...fields, telephone: String(data.get("telephone") ?? "") }),
+      });
+      const result = (await response.json()) as {
+        ok: boolean;
+        message: string;
+        errors?: FieldErrors;
+      };
+      if (result.ok) {
+        form.reset();
+        setErrors({});
+        setSent(true);
+        return;
+      }
+      if (result.errors) setErrors(result.errors);
+      setSubmitError(result.message);
+    } catch {
+      setSubmitError(
+        "Une erreur est survenue lors de l’envoi. Merci de réessayer dans quelques instants.",
+      );
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -389,19 +450,29 @@ function Index() {
               <h3>Paris</h3><p>134-136 boulevard Brune<br />75014 Paris</p>
               <h3>Casablanca</h3><p>Appartement n°4, Résidence Hamza<br />Quartier Palmier — 20340</p>
               <h3>Abidjan</h3><p>II Plateaux Vallon, villa lot 522<br />parcelle 222, Cocody</p>
-              <a href="mailto:contact@trademark-conseil.fr">contact@trademark-conseil.fr</a>
+              <a href="mailto:contact@tmrk.fr">contact@tmrk.fr</a>
             </aside>
-             <form onSubmit={submit} data-reveal="body">
+              <form ref={formRef} onSubmit={submit} data-reveal="body" noValidate>
               <p className="micro-title">Écrivez-nous</p>
-              <div className="form-grid">
-                <label>Prénom<input name="firstName" required /></label>
-                <label>Nom<input name="lastName" required /></label>
-                <label>Entreprise<input name="company" required /></label>
-                <label>E-mail<input type="email" name="email" required /></label>
-                <label className="full">Objet<textarea name="message" rows={2} required /></label>
-              </div>
-              <button type="submit">Envoyer</button>
-              {sent && <p className="form-status" role="status">Merci. Votre message est prêt à être transmis.</p>}
+              {sent ? (
+                <div className="form-thanks" role="status">
+                  <p className="form-thanks-title">Merci. Votre message a bien été transmis.</p>
+                  <p>Notre équipe en prendra connaissance avec attention et reviendra vers vous dans les meilleurs délais.</p>
+                </div>
+              ) : (
+                <>
+                  <div className="form-grid">
+                    <label>Prénom<input name="firstName" autoComplete="given-name" maxLength={100} />{errors.firstName && <span className="field-error">{errors.firstName}</span>}</label>
+                    <label>Nom<input name="lastName" autoComplete="family-name" maxLength={100} />{errors.lastName && <span className="field-error">{errors.lastName}</span>}</label>
+                    <label>Entreprise<input name="company" autoComplete="organization" maxLength={100} />{errors.company && <span className="field-error">{errors.company}</span>}</label>
+                    <label>E-mail<input type="email" name="email" autoComplete="email" maxLength={255} />{errors.email && <span className="field-error">{errors.email}</span>}</label>
+                    <label className="full">Objet<textarea name="message" rows={2} maxLength={2000} />{errors.message && <span className="field-error">{errors.message}</span>}</label>
+                    <input className="hp-field" type="text" name="telephone" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+                  </div>
+                  <button type="submit" disabled={sending}>{sending ? "Envoi en cours…" : "Envoyer"}</button>
+                  {submitError && <p className="form-error" role="alert">{submitError}</p>}
+                </>
+              )}
             </form>
           </div>
           <footer><a className="brand" href="#introduction">TRADEMARK</a><div><span>© 2026</span><span>Mentions légales</span><span>Confidentialité</span></div></footer>
