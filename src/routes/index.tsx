@@ -58,6 +58,41 @@ function Index() {
     });
 
     const introFooter = document.querySelector<HTMLElement>(".intro-footer");
+
+    // Section APPROCHE : le défilement est suspendu le temps que les six
+    // critères finissent de se mettre en place, pour ne pas couper la cascade.
+    const approche = document.getElementById("approche");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let approcheLocked = false;
+    let approcheDone = reduceMotion;
+    let unlockTimer: ReturnType<typeof setTimeout> | undefined;
+    const block = (event: Event) => event.preventDefault();
+    const blockKeys = (event: KeyboardEvent) => {
+      const keys = ["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " ", "Spacebar"];
+      if (keys.includes(event.key)) event.preventDefault();
+    };
+    const releaseApproche = () => {
+      if (!approcheLocked) return;
+      approcheLocked = false;
+      window.removeEventListener("wheel", block);
+      window.removeEventListener("touchmove", block);
+      window.removeEventListener("keydown", blockKeys);
+    };
+    const holdApproche = () => {
+      if (approcheDone || approcheLocked) return;
+      approcheDone = true;
+      approcheLocked = true;
+      window.addEventListener("wheel", block, { passive: false });
+      window.addEventListener("touchmove", block, { passive: false });
+      window.addEventListener("keydown", blockKeys);
+      // Les blocs de la section sont révélés immédiatement pendant le maintien.
+      approche
+        ?.querySelectorAll<HTMLElement>("[data-reveal]")
+        .forEach((el) => el.classList.add("is-visible"));
+      // Durée de la cascade : dernier critère (1750ms) + son animation (1100ms).
+      unlockTimer = setTimeout(releaseApproche, 2950);
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
