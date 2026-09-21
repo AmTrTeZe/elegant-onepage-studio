@@ -66,24 +66,28 @@ function Index() {
     let approcheLocked = false;
     let approcheDone = reduceMotion;
     let unlockTimer: ReturnType<typeof setTimeout> | undefined;
-    const block = (event: Event) => event.preventDefault();
+    // On ne bloque que la descente vers RÉSEAU : remonter reste possible.
+    const blockDown = (event: WheelEvent) => {
+      if (event.deltaY > 0) event.preventDefault();
+    };
+    const blockTouch = (event: Event) => event.preventDefault();
     const blockKeys = (event: KeyboardEvent) => {
-      const keys = ["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " ", "Spacebar"];
+      const keys = ["ArrowDown", "PageDown", "End", " ", "Spacebar"];
       if (keys.includes(event.key)) event.preventDefault();
     };
     const releaseApproche = () => {
       if (!approcheLocked) return;
       approcheLocked = false;
-      window.removeEventListener("wheel", block);
-      window.removeEventListener("touchmove", block);
+      window.removeEventListener("wheel", blockDown);
+      window.removeEventListener("touchmove", blockTouch);
       window.removeEventListener("keydown", blockKeys);
     };
     const holdApproche = () => {
       if (approcheDone || approcheLocked) return;
       approcheDone = true;
       approcheLocked = true;
-      window.addEventListener("wheel", block, { passive: false });
-      window.addEventListener("touchmove", block, { passive: false });
+      window.addEventListener("wheel", blockDown, { passive: false });
+      window.addEventListener("touchmove", blockTouch, { passive: false });
       window.addEventListener("keydown", blockKeys);
       // Les blocs de la section sont révélés immédiatement pendant le maintien.
       approche
@@ -104,7 +108,6 @@ function Index() {
           if (target.classList.contains("display-sweep") && introFooter) {
             introFooter.classList.add("is-visible");
           }
-          if (approche && approche.contains(target)) holdApproche();
           observer.unobserve(entry.target);
         });
       },
@@ -114,8 +117,20 @@ function Index() {
     items.forEach((item) => {
       if (item !== introFooter) observer.observe(item);
     });
+
+    // Le maintien ne démarre qu'une fois APPROCHE calée en haut de l'écran,
+    // donc jamais pendant la transition CONTEXTE → APPROCHE.
+    const watchApproche = () => {
+      if (approcheDone || !approche) return;
+      const top = approche.getBoundingClientRect().top;
+      if (top <= 2) holdApproche();
+    };
+    window.addEventListener("scroll", watchApproche, { passive: true });
+    watchApproche();
+
     return () => {
       observer.disconnect();
+      window.removeEventListener("scroll", watchApproche);
       if (unlockTimer !== undefined) clearTimeout(unlockTimer);
       releaseApproche();
     };
