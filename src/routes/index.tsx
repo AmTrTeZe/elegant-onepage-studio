@@ -129,25 +129,51 @@ function Index() {
       const limit = document.documentElement.scrollHeight - window.innerHeight;
       return Math.max(0, Math.min(limit, base - (desktop.matches ? 0 : header.offsetHeight)));
     };
-    let settle: number | undefined;
+    let scrollFrame: number | undefined;
+    const scrollToTarget = (top: number) => {
+      if (scrollFrame !== undefined) cancelAnimationFrame(scrollFrame);
+      const start = window.scrollY;
+      const distance = top - start;
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const duration = reduceMotion ? 0 : Math.min(1100, Math.max(650, Math.abs(distance) * 0.22));
+      const previousBehavior = document.documentElement.style.scrollBehavior;
+      document.documentElement.style.scrollBehavior = "auto";
+
+      if (duration === 0) {
+        window.scrollTo(0, top);
+        document.documentElement.style.scrollBehavior = previousBehavior;
+        return;
+      }
+
+      const startedAt = performance.now();
+      const step = (now: number) => {
+        const progress = Math.min(1, (now - startedAt) / duration);
+        const eased = progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+        window.scrollTo(0, start + distance * eased);
+        if (progress < 1) {
+          scrollFrame = requestAnimationFrame(step);
+          return;
+        }
+        window.scrollTo(0, top);
+        scrollFrame = undefined;
+        document.documentElement.style.scrollBehavior = previousBehavior;
+      };
+      scrollFrame = requestAnimationFrame(step);
+    };
     const onAnchorClick = (event: MouseEvent) => {
       const link = (event.target as HTMLElement | null)?.closest<HTMLAnchorElement>('a[href^="#"]');
       if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey) return;
-      const id = link.getAttribute("href")!.slice(1);
+      const href = link.getAttribute("href");
+      if (!href) return;
+      const id = href.slice(1);
       const target = document.getElementById(id);
       if (!target) return;
       event.preventDefault();
-      // On laisse le clic se terminer avant de défiler, puis on vérifie
-      // l'arrivée : le repositionnement automatique du navigateur pouvait
-      // interrompre le défilement et laisser la page entre deux sections.
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: destinationOf(target), behavior: "smooth" });
-        window.clearTimeout(settle);
-        settle = window.setTimeout(() => {
-          const wanted = destinationOf(target);
-          if (Math.abs(window.scrollY - wanted) > 2) window.scrollTo({ top: wanted });
-        }, 900);
-      });
+      // Un seul trajet contrôlé évite l'arrêt du défilement natif entre deux
+      // panneaux collants lors d'un retour depuis une section plus basse.
+      scrollToTarget(destinationOf(target));
       history.replaceState(null, "", `#${id}`);
     };
 
@@ -164,6 +190,7 @@ function Index() {
       window.removeEventListener("resize", calibrate);
       window.removeEventListener("resize", sync);
       document.removeEventListener("click", onAnchorClick);
+      if (scrollFrame !== undefined) cancelAnimationFrame(scrollFrame);
     };
   }, []);
 
