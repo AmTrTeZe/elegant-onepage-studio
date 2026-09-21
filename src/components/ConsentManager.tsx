@@ -29,7 +29,7 @@ const DEFAULT_CHOICES: ConsentChoices = {
   marketing: false,
 };
 
-const CATEGORIES: {
+const CATEGORIES_FR: {
   key: ConsentCategory;
   title: string;
   description: string;
@@ -59,6 +59,34 @@ const CATEGORIES: {
     title: "Communication & audiences",
     description:
       "Mesure de nos actions de communication et adaptation de nos contenus professionnels. Aucun profilage publicitaire tiers.",
+  },
+];
+
+const CATEGORIES_EN: typeof CATEGORIES_FR = [
+  {
+    key: "necessaire",
+    title: "Strictly necessary",
+    description:
+      "Essential to the operation of the website and the security of the contact form. These cookies cannot be disabled.",
+    locked: true,
+  },
+  {
+    key: "mesure",
+    title: "Audience measurement",
+    description:
+      "Anonymous visitor statistics used to improve the clarity and performance of the website.",
+  },
+  {
+    key: "fonctionnel",
+    title: "Browsing preferences",
+    description:
+      "Stores your display and language preferences to provide a consistent experience from one visit to the next.",
+  },
+  {
+    key: "marketing",
+    title: "Communications & audiences",
+    description:
+      "Measures the effectiveness of our communications and helps tailor our professional content. No third-party advertising profiling.",
   },
 ];
 
@@ -101,7 +129,7 @@ export function getConsent(): ConsentChoices {
   return loadRecord()?.choices ?? DEFAULT_CHOICES;
 }
 
-export default function ConsentManager() {
+export default function ConsentManager({ language = "fr" }: { language?: "fr" | "en" }) {
   const [ready, setReady] = useState(false);
   const [record, setRecord] = useState<ConsentRecord | null>(null);
   const [panelOpen, setPanelOpen] = useState(false);
@@ -154,30 +182,31 @@ export default function ConsentManager() {
   if (!ready) return null;
 
   const bannerVisible = !record && !panelOpen;
+  const english = language === "en";
+  const categories = english ? CATEGORIES_EN : CATEGORIES_FR;
 
   return (
     <>
       {bannerVisible && (
-        <section className="consent-banner" role="dialog" aria-label="Gestion des cookies" aria-live="polite">
+        <section className="consent-banner" role="dialog" aria-label={english ? "Cookie management" : "Gestion des cookies"} aria-live="polite">
           <div className="consent-banner-inner">
             <div className="consent-copy">
-              <p className="consent-label">Confidentialité</p>
+              <p className="consent-label">{english ? "Privacy" : "Confidentialité"}</p>
               <p className="consent-text">
-                Nous utilisons des cookies strictement nécessaires au fonctionnement du site et, avec
-                votre accord, des cookies de mesure d’audience et de communication. Vous pouvez
-                accepter, refuser ou choisir catégorie par catégorie. Votre choix est conservé six mois
-                et reste modifiable à tout moment.
+                {english
+                  ? "We use cookies that are strictly necessary for the website to operate and, with your consent, audience measurement and communication cookies. You may accept, reject or choose by category. Your choice is retained for six months and can be changed at any time."
+                  : "Nous utilisons des cookies strictement nécessaires au fonctionnement du site et, avec votre accord, des cookies de mesure d’audience et de communication. Vous pouvez accepter, refuser ou choisir catégorie par catégorie. Votre choix est conservé six mois et reste modifiable à tout moment."}
               </p>
             </div>
             <div className="consent-actions">
               <button type="button" className="consent-btn ghost" onClick={() => setPanelOpen(true)}>
-                Personnaliser
+                {english ? "Customise" : "Personnaliser"}
               </button>
               <button type="button" className="consent-btn ghost" onClick={refuseAll}>
-                Tout refuser
+                {english ? "Reject all" : "Tout refuser"}
               </button>
               <button type="button" className="consent-btn solid" onClick={acceptAll}>
-                Tout accepter
+                {english ? "Accept all" : "Tout accepter"}
               </button>
             </div>
           </div>
@@ -190,26 +219,27 @@ export default function ConsentManager() {
             className="consent-panel"
             role="dialog"
             aria-modal="true"
-            aria-label="Préférences de confidentialité"
+            aria-label={english ? "Privacy preferences" : "Préférences de confidentialité"}
             onClick={(event) => event.stopPropagation()}
           >
             <header className="consent-panel-head">
-              <p className="consent-label">Préférences de confidentialité</p>
+              <p className="consent-label">{english ? "Privacy preferences" : "Préférences de confidentialité"}</p>
               <button
                 type="button"
                 className="consent-close"
-                aria-label="Fermer"
+                aria-label={english ? "Close" : "Fermer"}
                 onClick={() => setPanelOpen(false)}
               >
                 ✕
               </button>
             </header>
             <p className="consent-text">
-              Aucun cookie non essentiel n’est déposé avant votre accord. Vous pouvez retirer votre
-              consentement à tout moment depuis le lien « Gestion des cookies » en bas de page.
+              {english
+                ? "No non-essential cookie is placed before you provide consent. You can withdraw your consent at any time using the ‘Cookie settings’ link at the bottom of the page."
+                : "Aucun cookie non essentiel n’est déposé avant votre accord. Vous pouvez retirer votre consentement à tout moment depuis le lien « Gestion des cookies » en bas de page."}
             </p>
             <ul className="consent-list">
-              {CATEGORIES.map((category) => (
+              {categories.map((category) => (
                 <li key={category.key}>
                   <div className="consent-row">
                     <h3>{category.title}</h3>
@@ -224,7 +254,11 @@ export default function ConsentManager() {
                       />
                       <span aria-hidden="true" />
                       <span className="consent-switch-text">
-                        {category.locked ? "Toujours actif" : draft[category.key] ? "Activé" : "Désactivé"}
+                        {category.locked
+                          ? english ? "Always active" : "Toujours actif"
+                          : draft[category.key]
+                            ? english ? "Enabled" : "Activé"
+                            : english ? "Disabled" : "Désactivé"}
                       </span>
                     </label>
                   </div>
@@ -234,24 +268,24 @@ export default function ConsentManager() {
             </ul>
             <div className="consent-actions">
               <button type="button" className="consent-btn ghost" onClick={refuseAll}>
-                Tout refuser
+                {english ? "Reject all" : "Tout refuser"}
               </button>
               <button type="button" className="consent-btn ghost" onClick={acceptAll}>
-                Tout accepter
+                {english ? "Accept all" : "Tout accepter"}
               </button>
               <button type="button" className="consent-btn solid" onClick={() => persist(draft)}>
-                Enregistrer mes choix
+                {english ? "Save my choices" : "Enregistrer mes choix"}
               </button>
             </div>
             {record && (
               <p className="consent-proof">
-                Choix enregistré le{" "}
-                {new Date(record.date).toLocaleDateString("fr-FR", {
+                {english ? "Choice saved on" : "Choix enregistré le"}{" "}
+                {new Date(record.date).toLocaleDateString(english ? "en-GB" : "fr-FR", {
                   day: "2-digit",
                   month: "long",
                   year: "numeric",
                 })}{" "}
-                · référence {record.id.slice(0, 8)}
+                · {english ? "reference" : "référence"} {record.id.slice(0, 8)}
               </p>
             )}
           </div>
