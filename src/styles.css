@@ -112,34 +112,38 @@ form button:hover { opacity: .78; }
 footer { margin-top: 70px; padding-top: 22px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
 footer div { display: flex; gap: 32px; text-transform: uppercase; font-size: 9px; font-weight: 600; letter-spacing: .18em; color: var(--muted-foreground); }
 
+/* ---- Mise en place des contenus, par type ---- */
+/* Titres : chaque ligne se dévoile de bas en haut, comme un masque qui se lève */
 @keyframes reveal-title {
-  from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(26px); }
-  to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
+  from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(30px); }
+  to { opacity: 1; clip-path: inset(0 0 -8% 0); transform: translateY(0); }
 }
+/* Textes courants : fondu ascendant très doux */
 @keyframes reveal-body {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
+/* Phrases d'accent : glissement latéral discret */
 @keyframes reveal-lead {
-  from { opacity: 0; transform: translateX(-22px); }
+  from { opacity: 0; transform: translateX(-24px); }
   to { opacity: 1; transform: translateX(0); }
 }
+/* Labels : balayage horizontal, comme une ligne qui s'encre */
 @keyframes reveal-label {
   from { opacity: 0; clip-path: inset(0 100% 0 0); }
   to { opacity: 1; clip-path: inset(0 0 0 0); }
 }
+/* Blocs : montée légère avec léger recul d'échelle */
 @keyframes reveal-item {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(24px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 [data-reveal] { opacity: 0; will-change: opacity, transform, clip-path; }
-[data-reveal="title"].is-visible { animation: reveal-title 1s cubic-bezier(.16,1,.3,1) both; }
-[data-reveal="body"].is-visible { animation: reveal-body .85s .12s cubic-bezier(.22,1,.36,1) both; }
-[data-reveal="lead"].is-visible { animation: reveal-lead .9s .08s cubic-bezier(.16,1,.3,1) both; }
-[data-reveal="label"].is-visible { animation: reveal-label .7s cubic-bezier(.16,1,.3,1) both; }
-[data-reveal="item"].is-visible { animation: reveal-item .72s var(--delay, 0ms) cubic-bezier(.22,1,.36,1) both; }
-.lever-grid article:nth-child(2) { --delay: 90ms; }
-.lever-grid article:nth-child(3) { --delay: 180ms; }
+[data-reveal="title"].is-visible { animation: reveal-title 1.05s var(--stagger, 0ms) cubic-bezier(.16,1,.3,1) both; }
+[data-reveal="body"].is-visible { animation: reveal-body .9s var(--stagger, 0ms) cubic-bezier(.22,1,.36,1) both; }
+[data-reveal="lead"].is-visible { animation: reveal-lead .95s var(--stagger, 0ms) cubic-bezier(.16,1,.3,1) both; }
+[data-reveal="label"].is-visible { animation: reveal-label .75s var(--stagger, 0ms) cubic-bezier(.16,1,.3,1) both; }
+[data-reveal="item"].is-visible { animation: reveal-item .8s var(--stagger, 0ms) cubic-bezier(.22,1,.36,1) both; }
 
 @media (max-width: 760px) {
   .site-header { height: 66px; padding-inline: 20px; }
