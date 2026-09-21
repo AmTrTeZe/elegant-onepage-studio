@@ -70,6 +70,20 @@ function Index() {
     const header = document.querySelector<HTMLElement>(".site-header");
     if (!header) return;
     const panels = Array.from(document.querySelectorAll<HTMLElement>(".panel"));
+    const desktop = window.matchMedia("(min-width: 761px)");
+
+    // Cale chaque section : une section plus haute que l'écran ne se fige
+    // qu'une fois son bas atteint, pour être lue en entier avant d'être recouverte.
+    const calibrate = () => {
+      panels.forEach((panel) => {
+        if (!desktop.matches) {
+          panel.style.top = "";
+          return;
+        }
+        panel.style.top = `${Math.min(0, window.innerHeight - panel.offsetHeight)}px`;
+      });
+    };
+
     const sync = () => {
       const headerH = header.offsetHeight;
       let theme: "light" | "dark" = "light";
@@ -80,11 +94,14 @@ function Index() {
       }
       header.dataset["theme"] = theme;
     };
+    calibrate();
     sync();
     window.addEventListener("scroll", sync, { passive: true });
+    window.addEventListener("resize", calibrate);
     window.addEventListener("resize", sync);
     return () => {
       window.removeEventListener("scroll", sync);
+      window.removeEventListener("resize", calibrate);
       window.removeEventListener("resize", sync);
     };
   }, []);
