@@ -61,6 +61,29 @@ function Index() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const header = document.querySelector<HTMLElement>(".site-header");
+    if (!header) return;
+    const panels = Array.from(document.querySelectorAll<HTMLElement>(".panel"));
+    const sync = () => {
+      const headerH = header.offsetHeight;
+      let theme: "light" | "dark" = "light";
+      for (const panel of panels) {
+        if (panel.getBoundingClientRect().top <= headerH + 1) {
+          theme = panel.classList.contains("panel-dark") ? "dark" : "light";
+        }
+      }
+      header.dataset["theme"] = theme;
+    };
+    sync();
+    window.addEventListener("scroll", sync, { passive: true });
+    window.addEventListener("resize", sync);
+    return () => {
+      window.removeEventListener("scroll", sync);
+      window.removeEventListener("resize", sync);
+    };
+  }, []);
+
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSent(true);
