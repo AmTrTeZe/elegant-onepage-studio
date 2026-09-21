@@ -160,6 +160,10 @@ footer div { display: flex; gap: 32px; text-transform: uppercase; font-size: 9px
 .consent-switch input:focus-visible + span[aria-hidden] { outline: 1px solid var(--ink); outline-offset: 3px; }
 .consent-switch-text { font-size: 9px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: color-mix(in oklab, var(--ink) 58%, transparent); }
 .consent-proof { margin: 22px 0 0; font-size: 10px; font-weight: 500; letter-spacing: .06em; color: color-mix(in oklab, var(--ink) 50%, transparent); }
+@media (max-width: 1100px) {
+  .consent-banner-inner { grid-template-columns: 1fr; align-items: start; gap: 22px; }
+  .consent-text { max-width: none; }
+}
 
 /* ---- Mise en place des contenus, par type ---- */
 /* Titres : chaque ligne se dévoile seule, de bas en haut, l'une après l'autre */
