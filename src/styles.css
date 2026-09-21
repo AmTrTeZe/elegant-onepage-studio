@@ -105,10 +105,19 @@ form button:hover { opacity: .78; }
 footer { margin-top: 70px; padding-top: 22px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
 footer div { display: flex; gap: 32px; text-transform: uppercase; font-size: 9px; font-weight: 600; letter-spacing: .18em; color: var(--muted-foreground); }
 
-[data-reveal] { opacity: 0; transform: translateY(26px); transition: opacity .85s cubic-bezier(.2,.75,.25,1), transform .85s cubic-bezier(.2,.75,.25,1); transition-delay: var(--delay, 0ms); }
-[data-reveal].is-visible { opacity: 1; transform: translateY(0); }
-.display[data-reveal] { clip-path: inset(0 0 100% 0); transform: translateY(18px); transition: clip-path 1.05s cubic-bezier(.16,1,.3,1), transform 1.05s cubic-bezier(.16,1,.3,1), opacity .35s ease; }
-.display[data-reveal].is-visible { clip-path: inset(0 0 0 0); transform: translateY(0); }
+@keyframes type-set {
+  from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(22px); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); }
+}
+[data-reveal] { opacity: 1; transform: translateY(0); }
+.intro .display[data-reveal] { animation: type-set 1.05s .12s cubic-bezier(.16,1,.3,1) both; }
+@supports (animation-timeline: view()) {
+  .panel:not(.intro) .display[data-reveal] {
+    animation: type-set 1s cubic-bezier(.16,1,.3,1) both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 32%;
+  }
+}
 
 @media (max-width: 760px) {
   .site-header { height: 66px; padding-inline: 20px; }
@@ -145,5 +154,5 @@ footer div { display: flex; gap: 32px; text-transform: uppercase; font-size: 9px
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
-  [data-reveal] { opacity: 1; transform: none; clip-path: none; }
+  [data-reveal] { opacity: 1; transform: none; clip-path: none; animation: none !important; }
 }
