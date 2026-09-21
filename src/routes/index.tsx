@@ -475,9 +475,10 @@ function Index() {
               )}
             </form>
           </div>
-          <footer><a className="brand" href="#introduction">TRADEMARK</a><div><span>© 2026</span><span>Mentions légales</span><span>Confidentialité</span></div></footer>
+          <footer><a className="brand" href="#introduction">TRADEMARK</a><div><span>© 2026</span><span>Mentions légales</span><span>Confidentialité</span><button type="button" className="footer-link" onClick={() => window.dispatchEvent(new Event("tmrk:open-consent"))}>Gestion des cookies</button></div></footer>
         </div>
       </section>
+      <ConsentManager />
     </main>
   );
 }
