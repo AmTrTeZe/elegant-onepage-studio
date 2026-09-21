@@ -104,6 +104,7 @@ function Index() {
           if (target.classList.contains("display-sweep") && introFooter) {
             introFooter.classList.add("is-visible");
           }
+          if (approche && approche.contains(target)) holdApproche();
           observer.unobserve(entry.target);
         });
       },
@@ -113,7 +114,11 @@ function Index() {
     items.forEach((item) => {
       if (item !== introFooter) observer.observe(item);
     });
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      if (unlockTimer !== undefined) clearTimeout(unlockTimer);
+      releaseApproche();
+    };
   }, []);
 
   useEffect(() => {
