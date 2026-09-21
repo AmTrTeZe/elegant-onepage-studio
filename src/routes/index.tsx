@@ -160,12 +160,17 @@ function Index() {
     };
     window.addEventListener("scroll", watchApproche, { passive: true });
     watchApproche();
+    window.addEventListener("scroll", watchReseau, { passive: true });
+    watchReseau();
 
     return () => {
       observer.disconnect();
       window.removeEventListener("scroll", watchApproche);
+      window.removeEventListener("scroll", watchReseau);
       if (unlockTimer !== undefined) clearTimeout(unlockTimer);
+      if (reseauUnlockTimer !== undefined) clearTimeout(reseauUnlockTimer);
       releaseApproche();
+      releaseReseau();
     };
   }, []);
 
