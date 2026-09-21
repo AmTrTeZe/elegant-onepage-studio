@@ -142,7 +142,7 @@ function Index() {
            <p className="micro-title" data-reveal="label">Nos critères de sélection</p>
           <div className="criteria-grid">
             {criteria.map(([number, title, copy], index) => (
-               <article className="criterion" data-reveal="item" style={{ "--delay": `${index * 70}ms` } as React.CSSProperties} key={number}>
+               <article className="criterion" data-reveal="item" key={number}>
                 <span>{number}</span><h3>{title}</h3><p>{copy}</p>
               </article>
             ))}
