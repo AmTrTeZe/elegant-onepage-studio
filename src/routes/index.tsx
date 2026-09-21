@@ -132,7 +132,7 @@ function Index() {
       <section className="panel panel-light intro" id="introduction">
         <div className="page-shell">
           <SectionHeader number="01" title="Introduction" side="Paris · Casablanca · Abidjan" />
-          <h1 className="display display-intro" data-reveal="title">
+          <h1 className="display display-intro display-sweep" data-reveal="title">
             <span>Et si vos angles</span><span>morts devenaient</span><span>des relais de</span><span>croissance ?</span>
           </h1>
           <div className="intro-footer" data-reveal="body">
