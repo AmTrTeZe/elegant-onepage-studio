@@ -1,1 +1,1 @@
-- [x] Recaler toutes les sections sur mobile, tablette et ordinateur pour que chaque contenu soit entièrement visible avant le recouvrement.
+- [ ] Créer une version anglaise complète et soignée, avec le même design, les mêmes effets et les mêmes fonctionnalités que la version française.
