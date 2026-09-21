@@ -5,3 +5,4 @@
 - [x] Maintenir le menu fixe sur fond ivoire.
 - [x] Créer un recouvrement élégant entre sections successives.
 - [x] Vérifier le rendu sur ordinateur et mobile.
+- [x] Étendre le paragraphe d’intro jusqu’au T de « DEVENAIENT », en gras, et descendre légèrement « Parlons-en → ».
