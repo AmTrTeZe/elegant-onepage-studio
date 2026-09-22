@@ -507,7 +507,7 @@ function Index() {
 
       <section className="panel panel-light" id="reseau">
         <div className="page-shell">
-          <SectionHeader number="04" title="Réseau" side="Accès aux décideurs" />
+          <SectionHeader number="04" title="Accès Marchés" side="Accès aux décideurs" />
            <h2 className="display display-section" data-reveal="title"><span>Ouvrir de</span><span>nouveaux marchés</span></h2>
            <div className="network-copy" data-reveal="body">
             <p className="lead">Pénétrer un nouveau marché exige plus qu’une démarche commerciale : il faut en comprendre les acteurs, les circuits de décision et disposer des bons relais.</p>
@@ -524,7 +524,7 @@ function Index() {
 
       <section className="panel panel-dark" id="intervention">
         <div className="page-shell">
-          <SectionHeader number="05" title="Intervention" side="Périmètre" />
+          <SectionHeader number="05" title="Notre Rôle" side="Périmètre" />
            <h2 className="display display-section" data-reveal="title"><span>Relais locaux pour</span><span>technologies globales</span></h2>
            <p className="intervention-intro body-copy" data-reveal="body">TRADEMARK permet aux entreprises technologiques d’aborder des marchés qu’elles ne pourraient pas nécessairement adresser avec leurs seules équipes, sans engager en amont les coûts de prospection, de réseau et de présence locale qu’exigerait une approche directe.</p>
            <div className="scope-grid" data-reveal="item">
