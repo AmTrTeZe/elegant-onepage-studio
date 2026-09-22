@@ -1,10 +1,10 @@
 /* Google tag (gtag.js) — balise Google Analytics fournie, chargée uniquement
    après consentement « Mesure d'audience » (bandeau cookies), conformément au
-   RGPD / CNIL. L'identifiant de mesure G-S3B1RL6FPX est public. */
+   RGPD / CNIL. L'identifiant de mesure G-1TJK2N0YTF est public. */
 
 import { getConsent } from "@/components/ConsentManager";
 
-const MEASUREMENT_ID = "G-S3B1RL6FPX";
+const MEASUREMENT_ID = "G-1TJK2N0YTF";
 
 let measurementId = "";
 let booted = false;
