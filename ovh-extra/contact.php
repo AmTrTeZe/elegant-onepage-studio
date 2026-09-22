@@ -7,6 +7,11 @@
 
 declare(strict_types=1);
 
+// Aucun détail technique ne doit apparaître dans la réponse envoyée au navigateur.
+@ini_set('display_errors', '0');
+@ini_set('log_errors', '1');
+error_reporting(0);
+
 header('Content-Type: application/json; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
 
