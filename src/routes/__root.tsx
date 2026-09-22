@@ -13,7 +13,6 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { setupAnalytics, trackPageView } from "../lib/analytics";
-import { getAnalyticsMeasurementId } from "../lib/analytics.functions";
 
 function NotFoundComponent() {
   return (
@@ -126,18 +125,10 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
-  // Google Analytics : l'identifiant de mesure est lu côté serveur (secret),
-  // le chargement ne s'effectue qu'après consentement « Mesure d'audience ».
+  // Google tag (gtag.js) : la balise fournie est chargée telle quelle,
+  // uniquement après consentement « Mesure d'audience ».
   useEffect(() => {
-    let cancelled = false;
-    getAnalyticsMeasurementId()
-      .then(({ measurementId }) => {
-        if (!cancelled && measurementId) setupAnalytics(measurementId);
-      })
-      .catch(() => undefined);
-    return () => {
-      cancelled = true;
-    };
+    setupAnalytics();
   }, []);
 
   const pathname = useRouterState({ select: (state) => state.location.pathname });
