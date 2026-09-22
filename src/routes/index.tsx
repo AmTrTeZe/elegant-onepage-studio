@@ -307,12 +307,18 @@ function Index() {
     const sync = () => {
       const headerH = header.offsetHeight;
       let theme: "light" | "dark" = "light";
+      let activeId: string | null = null;
       for (const panel of panels) {
         if (panel.getBoundingClientRect().top <= headerH + 1) {
           theme = panel.classList.contains("panel-dark") ? "dark" : "light";
+          activeId = panel.id ?? null;
         }
       }
       header.dataset["theme"] = theme;
+      navLinks.forEach((link) => {
+        const href = link.getAttribute("href") ?? "";
+        link.classList.toggle("is-current", activeId !== null && href === `#${activeId}`);
+      });
     };
     // Le saut d'ancre natif visait une position déjà figée : on utilise la
     // position naturelle mesurée de la section visée, dans les deux sens.
