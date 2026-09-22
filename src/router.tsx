@@ -1,9 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
-import { detectAndRedirect } from "./lib/detect-language";
-
-detectAndRedirect();
 
 export const getRouter = () => {
   const queryClient = new QueryClient();
@@ -12,6 +9,8 @@ export const getRouter = () => {
     routeTree,
     context: { queryClient },
     scrollRestoration: true,
+    // "/en" redirige vers "/en/" : la version anglaise vit avec la barre finale.
+    trailingSlash: "always",
     defaultPreloadStaleTime: 0,
   });
 
