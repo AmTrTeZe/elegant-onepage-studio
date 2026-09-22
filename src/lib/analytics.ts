@@ -1,11 +1,11 @@
-/* Google Analytics (gtag.js) — chargé uniquement après consentement
-   « Mesure d'audience » (bandeau cookies), conformément au RGPD / CNIL.
-   L'identifiant de mesure est récupéré côté serveur (secret), jamais
-   écrit en dur dans le code du navigateur. */
+/* Google tag (gtag.js) — balise Google Analytics fournie, chargée uniquement
+   après consentement « Mesure d'audience » (bandeau cookies), conformément au
+   RGPD / CNIL. L'identifiant de mesure G-S3B1RL6FPX est public. */
 
 import { getConsent } from "@/components/ConsentManager";
 
-let measurementId = "";
+const MEASUREMENT_ID = "G-S3B1RL6FPX";
+
 let booted = false;
 
 type GtagFn = (...args: unknown[]) => void;
@@ -42,10 +42,10 @@ function applyConsent() {
   if (allowed) loadGtagLibrary();
 }
 
-/** À appeler une seule fois, avec l'identifiant de mesure renvoyé par le serveur. */
-export function setupAnalytics(id: string) {
-  if (!id || booted || typeof window === "undefined") return;
-  measurementId = id;
+/** À appeler une seule fois, au démarrage de l'application. */
+export function setupAnalytics() {
+  if (booted || typeof window === "undefined") return;
+  measurementId = MEASUREMENT_ID;
   booted = true;
 
   // Le stub gtag doit exister avant tout appel (page_view, consentement…).
