@@ -15,7 +15,9 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
-const clientDir = path.join(root, "dist", "client");
+// TanStack Start / Nitro génère les fichiers publics (pages pré-rendues + assets)
+// dans .output/public. C'est la source de l'export statique.
+const clientDir = path.join(root, ".output", "public");
 const outDir = path.join(root, "ovh-dist");
 // Fichiers serveur optionnels (contact.php, consent.php, .htaccess…) à déposer
 // tels quels à la racine web OVH. Aucun rewrite SPA n'est généré.
@@ -33,7 +35,7 @@ console.log("[build:ovh] 1/3 — build de production + pré-rendu…");
 run(process.execPath, [path.join(root, "node_modules", "vite", "bin", "vite.js"), "build"]);
 
 if (!existsSync(clientDir)) {
-  console.error("[build:ovh] dist/client est introuvable : le build n'a rien produit.");
+  console.error("[build:ovh] .output/public est introuvable : le build n'a rien produit.");
   process.exit(1);
 }
 
