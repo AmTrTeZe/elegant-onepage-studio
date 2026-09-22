@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import ConsentManager from "@/components/ConsentManager";
+import { rememberLanguageChoice } from "@/lib/detect-language";
 
 type FieldName = "firstName" | "lastName" | "company" | "email" | "message";
 type FieldErrors = Partial<Record<FieldName, string>>;
@@ -383,7 +384,7 @@ function Index() {
           <a href="#approche">Approach</a>
           <a href="#reseau">Network</a>
           <a href="#intervention">Engagement</a>
-          <a href="#contact">Contact</a><Link className="language-link" to="/" hash="introduction" aria-label="Version française">FR</Link>
+          <a href="#contact">Contact</a><Link className="language-link" to="/" hash="introduction" aria-label="Version française" onClick={() => rememberLanguageChoice("fr")}>FR</Link>
         </nav>
       </header>
 
