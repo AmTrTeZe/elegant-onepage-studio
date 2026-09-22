@@ -494,7 +494,7 @@ function Index() {
 
       <section className="panel panel-light" id="reseau">
         <div className="page-shell">
-          <SectionHeader number="04" title="Network" side="Access to decision-makers" />
+          <SectionHeader number="04" title="Market Access" side="Access to decision-makers" />
            <h2 className="display display-section" data-reveal="title"><span>Opening</span><span>new markets</span></h2>
            <div className="network-copy" data-reveal="body">
             <p className="lead">Entering a new market takes more than a sales effort: you need to understand its players and decision-making circuits, and to have the right local partners.</p>
@@ -511,7 +511,7 @@ function Index() {
 
       <section className="panel panel-dark" id="intervention">
         <div className="page-shell">
-          <SectionHeader number="05" title="Engagement" side="Scope" />
+          <SectionHeader number="05" title="Our Role" side="Scope" />
            <h2 className="display display-section" data-reveal="title"><span>Local access for</span><span>global technologies</span></h2>
            <p className="intervention-intro body-copy" data-reveal="body">TRADEMARK enables technology companies to approach markets they could not necessarily address with their own teams, without committing upfront to the prospecting, networking and local-presence costs a direct approach would require.</p>
            <div className="scope-grid" data-reveal="item">
