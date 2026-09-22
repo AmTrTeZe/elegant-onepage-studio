@@ -488,7 +488,7 @@ function Index() {
       <section className="panel panel-light" id="reseau">
         <div className="page-shell">
           <SectionHeader number="04" title="Network" side="Access to decision-makers" />
-           <h2 className="display display-section" data-reveal="title"><span>Business enabler for</span><span>new markets</span></h2>
+           <h2 className="display display-section" data-reveal="title"><span>Opening</span><span>new markets</span></h2>
            <div className="network-copy" data-reveal="body">
             <p className="lead">Entering a new market takes more than a sales effort: you need to understand its players and decision-making circuits, and to have the right local partners.</p>
             <div className="body-copy"><p>Our teams’ experience within major international consulting and communications networks has allowed us to build, in several countries, a network of trusted local contacts and partners deeply rooted in their economic ecosystems.</p><p>These partners give us access to the right decision-making levels in leading companies, help us assess local issues and identify relevant opportunities faster, by arranging introductions to the relevant executive, technology and operations leadership.</p></div>
@@ -509,7 +509,7 @@ function Index() {
            <p className="intervention-intro body-copy" data-reveal="body">TRADEMARK enables technology companies to approach markets they could not necessarily address with their own teams, without committing upfront to the prospecting, networking and local-presence costs a direct approach would require.</p>
            <div className="scope-grid" data-reveal="item">
             <div><p className="micro-title">What we take on</p><ul><li>Identifying opportunities</li><li>Qualifying accounts</li><li>Access to decision-makers</li><li>Arranging introductions</li></ul></div>
-            <div className="muted-scope"><p className="micro-title">What remains yours</p><ul><li>Deployment model</li><li>Contracting</li><li>Delivery and support</li><li>Market development</li></ul></div>
+            <div className="muted-scope"><p className="micro-title">What remains yours</p><ul><li>Deployment model</li><li>Contracting</li><li>Deployment and support</li><li>Market development</li></ul></div>
           </div>
            <p className="closing-line" data-reveal="lead">Our role ends where the vendor’s begins.</p>
         </div>
