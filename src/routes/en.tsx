@@ -254,6 +254,7 @@ function Index() {
     const header = document.querySelector<HTMLElement>(".site-header");
     if (!header) return;
     const panels = Array.from(document.querySelectorAll<HTMLElement>(".panel"));
+    const navLinks = Array.from(header.querySelectorAll<HTMLAnchorElement>("nav a[href^='#']"));
     const desktop = window.matchMedia("(min-width: 761px)");
 
     // Position naturelle de chaque section dans le document : les sections
