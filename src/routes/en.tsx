@@ -509,7 +509,7 @@ function Index() {
            <p className="intervention-intro body-copy" data-reveal="body">TRADEMARK enables technology companies to approach markets they could not necessarily address with their own teams, without committing upfront to the prospecting, networking and local-presence costs a direct approach would require.</p>
            <div className="scope-grid" data-reveal="item">
             <div><p className="micro-title">What we take on</p><ul><li>Identifying opportunities</li><li>Qualifying accounts</li><li>Access to decision-makers</li><li>Arranging introductions</li></ul></div>
-            <div className="muted-scope"><p className="micro-title">What remains yours</p><ul><li>Deployment model</li><li>Contracting</li><li>Delivery and support</li><li>Market development</li></ul></div>
+            <div className="muted-scope"><p className="micro-title">What remains yours</p><ul><li>Deployment model</li><li>Contracting</li><li>Deployment and support</li><li>Market development</li></ul></div>
           </div>
            <p className="closing-line" data-reveal="lead">Our role ends where the vendor’s begins.</p>
         </div>
