@@ -10,6 +10,10 @@ import {
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
+import "@fontsource/archivo/latin-300.css";
+import "@fontsource/archivo/latin-500.css";
+import "@fontsource/archivo/latin-600.css";
+import "@fontsource/archivo/latin-800.css";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { setupAnalytics, trackPageView } from "../lib/analytics";
@@ -79,24 +83,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "TRADEMARK" },
-      { name: "description", content: "Cabinet de conseil en développement international." },
       { name: "author", content: "TRADEMARK" },
-      { property: "og:title", content: "TRADEMARK" },
-      { property: "og:description", content: "Cabinet de conseil en développement international." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { property: "og:site_name", content: "TRADEMARK" },
+      { name: "theme-color", content: "#F6F4EF" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Archivo:wght@300;500;600;700;800&display=swap" },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/favicon-48.png", sizes: "48x48", type: "image/png" },
+      { rel: "icon", href: "/favicon-96.png", sizes: "96x96", type: "image/png" },
+      { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+      { rel: "alternate", hrefLang: "fr", href: "https://www.tmrk.fr/" },
+      { rel: "alternate", hrefLang: "en", href: "https://www.tmrk.fr/en/" },
+      { rel: "alternate", hrefLang: "x-default", href: "https://www.tmrk.fr/en/" },
     ],
   }),
   shellComponent: RootShell,
