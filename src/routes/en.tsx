@@ -383,7 +383,7 @@ function Index() {
           <a href="#approche">Approach</a>
           <a href="#reseau">Network</a>
           <a href="#intervention">Engagement</a>
-          <a href="#contact">Contact</a><Link className="language-link" to="/" hash="introduction" aria-label="Version française">FR</Link>
+          <a href="#contact">Contact</a><Link className="language-link" to="/" hash="introduction" aria-label="Version française" onClick={() => rememberLanguageChoice("fr")}>FR</Link>
         </nav>
       </header>
 
