@@ -58,6 +58,10 @@ a { color: inherit; text-decoration: none; }
 .panel-dark { background: var(--ink); color: var(--paper); }
 .page-shell { width: 100%; max-width: 1440px; margin: 0 auto; }
 .section-header { padding: 76px 0 23px; border-bottom: 1px solid color-mix(in oklab, currentColor 18%, transparent); display: flex; justify-content: space-between; text-transform: uppercase; font-size: 10px; line-height: 1; font-weight: 600; letter-spacing: .22em; color: color-mix(in oklab, currentColor 63%, transparent); }
+/* Approche, Réseau et Intervention : contenu rapproché de 20 px du menu */
+@media (min-width: 761px) {
+  #approche .section-header, #reseau .section-header, #intervention .section-header { padding-top: 56px; }
+}
 
 .display { margin: 0; text-transform: uppercase; font-weight: 800; letter-spacing: 0; line-height: .93; }
 .display span { display: block; }
