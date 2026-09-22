@@ -1,0 +1,41 @@
+name: Build OVH
+
+# Déclenchement manuel depuis l'onglet "Actions" de GitHub.
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build statique OVH
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun (gestionnaire de paquets du projet)
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Installer les dépendances
+        run: bun install --frozen-lockfile
+
+      - name: Build OVH (production + pré-rendu + ovh-dist)
+        run: bun run build:ovh
+
+      - name: Vérifier la page d'accueil pré-rendue
+        run: test -s ovh-dist/index.html
+
+      - name: Vérifier la page anglaise pré-rendue
+        run: test -s ovh-dist/en/index.html
+
+      - name: Lister le contenu de ovh-dist
+        run: ls -laR ovh-dist
+
+      - name: Publier l'artifact téléchargeable
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-ovh
+          path: ovh-dist/
+          include-hidden-files: true
+          if-no-files-found: error
