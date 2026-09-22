@@ -33,7 +33,7 @@ jobs:
         run: ls -laR ovh-dist
 
       - name: Publier l'artifact téléchargeable
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: site-ovh
           path: ovh-dist/
