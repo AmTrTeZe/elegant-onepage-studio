@@ -20,12 +20,56 @@ const EXPEDITEUR   = 'contact@tmrk.fr'; // adresse du domaine OVH pour l'en-têt
 const MAX_NOM      = 100;
 const MAX_MESSAGE  = 2000;
 
+// Limitation de débit : 3 envois maximum par fenêtre glissante d'1 heure.
+const RL_MAX_ENVOIS   = 3;
+const RL_FENETRE_SEC  = 3600;
+const RL_SEL          = 'kR7zP4vX9mQ2wL8sN5dF1hJ6bT3yU0cG'; // sel de hachage — ne pas diffuser
+const RL_DOSSIER      = __DIR__ . '/contact-rate';
+
 /** Réponse JSON standardisée puis arrêt. */
 function repondre(int $code, bool $ok, string $message, array $erreurs = []): void
 {
     http_response_code($code);
     echo json_encode(['ok' => $ok, 'message' => $message, 'errors' => $erreurs], JSON_UNESCAPED_UNICODE);
     exit;
+}
+
+/**
+ * Limitation de débit silencieuse, sans IP en clair ni session PHP :
+ * un fichier par empreinte hachée contient les horodatages des envois.
+ * Renvoie true si un nouvel envoi est autorisé (et l'enregistre alors).
+ */
+function envoiAutorise(): bool
+{
+    $empreinte = hash('sha256', RL_SEL . '|' . ($_SERVER['REMOTE_ADDR'] ?? 'inconnu'));
+    $fichier = RL_DOSSIER . '/' . $empreinte . '.log';
+
+    if (!is_dir(RL_DOSSIER)) {
+        @mkdir(RL_DOSSIER, 0750, true);
+        // Empêche toute consultation du dossier depuis le web.
+        @file_put_contents(RL_DOSSIER . '/.htaccess', "Require all denied\n");
+    }
+
+    $maintenant = time();
+    $seuil = $maintenant - RL_FENETRE_SEC;
+
+    $horodatages = [];
+    if (is_file($fichier)) {
+        foreach ((array)file($fichier, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $ligne) {
+            $t = (int)$ligne;
+            if ($t >= $seuil) {
+                $horodatages[] = $t;
+            }
+        }
+    }
+
+    if (count($horodatages) >= RL_MAX_ENVOIS) {
+        return false;
+    }
+
+    $horodatages[] = $maintenant;
+    @file_put_contents($fichier, implode("\n", $horodatages) . "\n", LOCK_EX);
+    return true;
 }
 
 /** Nettoie une chaîne : supprime les retours chariot (anti-injection d'en-têtes) et espaces superflus. */
