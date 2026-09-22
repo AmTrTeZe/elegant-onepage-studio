@@ -15,7 +15,13 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 
 const root = process.cwd();
-const clientDir = path.join(root, "dist", "client");
+// TanStack Start / Nitro génère les fichiers publics (pages pré-rendues + assets)
+// dans .output/public. Selon l'environnement (sandbox local vs CI), le dossier
+// de sortie peut être dist/client : on détecte celui qui contient les pages.
+const clientCandidates = [
+  path.join(root, ".output", "public"),
+  path.join(root, "dist", "client"),
+];
 const outDir = path.join(root, "ovh-dist");
 // Fichiers serveur optionnels (contact.php, consent.php, .htaccess…) à déposer
 // tels quels à la racine web OVH. Aucun rewrite SPA n'est généré.
@@ -32,10 +38,22 @@ function run(cmd, args) {
 console.log("[build:ovh] 1/3 — build de production + pré-rendu…");
 run(process.execPath, [path.join(root, "node_modules", "vite", "bin", "vite.js"), "build"]);
 
-if (!existsSync(clientDir)) {
-  console.error("[build:ovh] dist/client est introuvable : le build n'a rien produit.");
+let clientDir = null;
+for (const candidate of clientCandidates) {
+  if (existsSync(path.join(candidate, "index.html"))) {
+    clientDir = candidate;
+    break;
+  }
+}
+if (!clientDir) {
+  console.error(
+    `[build:ovh] Aucun dossier public généré (attendu : ${clientCandidates
+      .map((c) => path.relative(root, c))
+      .join(" ou ")}) — le build n'a rien produit.`,
+  );
   process.exit(1);
 }
+console.log(`[build:ovh] Dossier public détecté : ${path.relative(root, clientDir)}`);
 
 console.log("[build:ovh] 2/3 — assemblage de ovh-dist…");
 await rm(outDir, { recursive: true, force: true });
@@ -51,6 +69,8 @@ console.log("[build:ovh] 3/3 — vérifications…");
 const required = [
   "index.html",
   path.join("en", "index.html"),
+  "contact.php",
+  "consent.php",
   "robots.txt",
   "sitemap.xml",
   "favicon.svg",
