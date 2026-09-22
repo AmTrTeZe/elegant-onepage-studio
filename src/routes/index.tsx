@@ -28,6 +28,12 @@ export const Route = createFileRoute("/")({
         content:
           "Cabinet spécialisé dans l’introduction de technologies à fort impact sur des marchés internationaux à haut potentiel.",
       },
+      { property: "og:title", content: "TRADEMARK — Accès local pour technologies globales" },
+      {
+        property: "og:description",
+        content:
+          "Cabinet spécialisé dans l’introduction de technologies à fort impact sur des marchés internationaux à haut potentiel.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
