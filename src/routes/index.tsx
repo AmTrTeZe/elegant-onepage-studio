@@ -316,10 +316,13 @@ function Index() {
     };
     // Le saut d'ancre natif visait une position déjà figée : on utilise la
     // position naturelle mesurée de la section visée, dans les deux sens.
+    // Rapprochement du contenu sous le menu à l'arrivée (ordinateur uniquement).
+    const arrivalOffset: Record<string, number> = { approche: 20, reseau: 20, intervention: 20 };
     const destinationOf = (target: HTMLElement) => {
       const base = naturalTops.get(target) ?? target.offsetTop;
       const limit = document.documentElement.scrollHeight - window.innerHeight;
-      return Math.max(0, Math.min(limit, base - (desktop.matches ? 0 : header.offsetHeight)));
+      const offset = desktop.matches ? (arrivalOffset[target.id] ?? 0) : 0;
+      return Math.max(0, Math.min(limit, base + offset - (desktop.matches ? 0 : header.offsetHeight)));
     };
     let scrollFrame: number | undefined;
     const scrollToTarget = (top: number) => {
