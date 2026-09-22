@@ -129,6 +129,11 @@ if ($erreurs) {
     repondre(422, false, 'Certains champs sont à corriger.', $erreurs);
 }
 
+// Limitation de débit : au-delà du quota, message générique sans détail technique.
+if (!envoiAutorise()) {
+    repondre(429, false, 'Votre demande n’a pas pu aboutir pour le moment. Merci de réessayer un peu plus tard.');
+}
+
 // Composition du message
 $sujet = 'Contact site — ' . $entreprise . ' (' . $prenom . ' ' . $nom . ')';
 $lignes = [
