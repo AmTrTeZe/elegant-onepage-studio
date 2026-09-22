@@ -6,6 +6,7 @@ import { getConsent } from "@/components/ConsentManager";
 
 const MEASUREMENT_ID = "G-S3B1RL6FPX";
 
+let measurementId = "";
 let booted = false;
 
 type GtagFn = (...args: unknown[]) => void;
