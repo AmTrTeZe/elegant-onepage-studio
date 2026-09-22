@@ -11,6 +11,11 @@
 
 declare(strict_types=1);
 
+// Aucun détail technique ne doit apparaître dans la réponse envoyée au navigateur.
+@ini_set('display_errors', '0');
+@ini_set('log_errors', '1');
+error_reporting(0);
+
 header('Content-Type: application/json; charset=utf-8');
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
@@ -19,8 +24,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     exit;
 }
 
-// Sel propre à votre installation : remplacez cette valeur par une chaîne aléatoire.
-const CONSENT_SALT = 'remplacez-moi-par-une-chaine-aleatoire';
+// Sel propre à votre installation (déjà généré aléatoirement, à conserver tel quel).
+const CONSENT_SALT = '40608f84512872da96a83713c639e66ff27ebaac62c48bb3';
 const CONSENT_LOG  = __DIR__ . '/consent-log/consent.log';
 
 $raw = file_get_contents('php://input') ?: '';
