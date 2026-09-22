@@ -53,6 +53,8 @@ console.log("[build:ovh] 3/3 — vérifications…");
 const required = [
   "index.html",
   path.join("en", "index.html"),
+  "contact.php",
+  "consent.php",
   "robots.txt",
   "sitemap.xml",
   "favicon.svg",
