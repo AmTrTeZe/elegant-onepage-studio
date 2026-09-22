@@ -24,8 +24,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     exit;
 }
 
-// Sel propre à votre installation : remplacez cette valeur par une chaîne aléatoire.
-const CONSENT_SALT = 'remplacez-moi-par-une-chaine-aleatoire';
+// Sel propre à votre installation (déjà généré aléatoirement, à conserver tel quel).
+const CONSENT_SALT = '40608f84512872da96a83713c639e66ff27ebaac62c48bb3';
 const CONSENT_LOG  = __DIR__ . '/consent-log/consent.log';
 
 $raw = file_get_contents('php://input') ?: '';
