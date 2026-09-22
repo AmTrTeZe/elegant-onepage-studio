@@ -430,8 +430,8 @@ function Index() {
         <a className="brand" href="#introduction" aria-label="TRADEMARK — home">TRADEMARK</a>
         <nav aria-label="Main navigation">
           <a href="#approche">Approach</a>
-          <a href="#reseau">Network</a>
-          <a href="#intervention">Engagement</a>
+          <a href="#reseau">Market access</a>
+          <a href="#intervention">Our role</a>
           <a href="#contact">Contact</a>
           <span className="language-switch">
             <a className="language-link" href="/" hrefLang="fr" aria-label="Version française">FR</a>
