@@ -26,13 +26,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Cabinet spécialisé dans l’introduction de technologies à fort impact sur des marchés internationaux à fort potentiel.",
+          "Cabinet spécialisé dans l’introduction de technologies à fort impact sur des marchés internationaux à haut potentiel.",
       },
       { property: "og:title", content: "TRADEMARK — Accès local pour technologies globales" },
       {
         property: "og:description",
         content:
-          "Cabinet spécialisé dans l’introduction de technologies à fort impact sur des marchés internationaux à fort potentiel.",
+          "Cabinet spécialisé dans l’introduction de technologies à fort impact sur des marchés internationaux à haut potentiel.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -396,7 +396,7 @@ function Index() {
             <span>Et si vos angles</span><span>morts devenaient</span><span>des relais de</span><span>croissance ?</span>
           </h1>
           <div className="intro-footer" data-reveal="body">
-            <p>TRADEMARK est un cabinet spécialisé dans l’introduction de technologies à fort impact sur des marchés internationaux à fort potentiel, au-delà des géographies prioritaires de leurs éditeurs.</p>
+            <p>TRADEMARK est un cabinet spécialisé dans l’introduction de technologies à fort impact sur des marchés internationaux à haut potentiel, au-delà des géographies directement couvertes par leurs éditeurs.</p>
             <a className="text-link" href="#contact">Parlons-en <span aria-hidden="true">→</span></a>
           </div>
         </div>
