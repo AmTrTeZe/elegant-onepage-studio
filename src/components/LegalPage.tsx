@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import type { ReactNode } from "react";
 import ConsentManager from "@/components/ConsentManager";
 
 type LegalPageProps = {
@@ -6,8 +7,8 @@ type LegalPageProps = {
   eyebrow: string;
   title: string;
   updated: string;
-  children: React.ReactNode;
-  alternatePath: "/mentions-legales" | "/confidentialite" | "/en/legal-notice" | "/en/privacy";
+  children: ReactNode;
+  alternatePath: "/mentions-legales/" | "/confidentialite/" | "/en/legal-notice/" | "/en/privacy/";
 };
 
 export default function LegalPage({ language, eyebrow, title, updated, children, alternatePath }: LegalPageProps) {
@@ -16,9 +17,9 @@ export default function LegalPage({ language, eyebrow, title, updated, children,
   return (
     <main className="legal-page">
       <header className="site-header legal-header" data-theme="light">
-        <Link className="brand" to={english ? "/en" : "/"}>TRADEMARK</Link>
+        <Link className="brand" to={english ? "/en/" : "/"}>TRADEMARK</Link>
         <nav aria-label={english ? "Legal page navigation" : "Navigation des pages juridiques"}>
-          <Link to={english ? "/en" : "/"}>{english ? "Home" : "Accueil"}</Link>
+          <Link to={english ? "/en/" : "/"}>{english ? "Home" : "Accueil"}</Link>
           <span className="language-switch">
             {english ? (
               <>
@@ -47,11 +48,11 @@ export default function LegalPage({ language, eyebrow, title, updated, children,
       </article>
 
       <footer className="legal-footer">
-        <Link className="brand" to={english ? "/en" : "/"}>TRADEMARK</Link>
+        <Link className="brand" to={english ? "/en/" : "/"}>TRADEMARK</Link>
         <div>
           <span>© 2026</span>
-          <Link to={english ? "/en/legal-notice" : "/mentions-legales"}>{english ? "Legal notice" : "Mentions légales"}</Link>
-          <Link to={english ? "/en/privacy" : "/confidentialite"}>{english ? "Privacy" : "Confidentialité"}</Link>
+          <Link to={english ? "/en/legal-notice/" : "/mentions-legales/"}>{english ? "Legal notice" : "Mentions légales"}</Link>
+          <Link to={english ? "/en/privacy/" : "/confidentialite/"}>{english ? "Privacy" : "Confidentialité"}</Link>
           <button type="button" className="footer-link" onClick={() => window.dispatchEvent(new Event("tmrk:open-consent"))}>
             {english ? "Cookie settings" : "Gestion des cookies"}
           </button>

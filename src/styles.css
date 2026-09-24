@@ -281,6 +281,16 @@ footer a:not(.brand):hover, footer a:not(.brand):focus-visible { color: var(--in
   .site-header nav a { font-size: 8px; letter-spacing: .1em; }
   .site-header nav .language-link { margin-left: 0; padding-left: 6px; }
   .brand { font-size: 11px; }
+  .legal-page { padding-top: 66px; }
+  .legal-header nav { align-items: center; }
+  .legal-shell { width: calc(100% - 40px); padding: 58px 0 90px; grid-template-columns: 1fr; gap: 58px; }
+  .legal-heading { position: static; }
+  .legal-heading h1 { font-size: clamp(40px, 12vw, 58px); }
+  .legal-content { font-size: 14px; }
+  .legal-content .legal-intro { font-size: 17px; }
+  .legal-content section { padding-top: 34px; }
+  .legal-table-wrap { margin-inline: -20px; padding-inline: 20px; }
+  .legal-footer { width: calc(100% - 40px); }
   .panel { position: relative; top: auto; padding: 66px 20px 48px; min-height: auto; margin-bottom: 0; box-shadow: 0 -12px 30px color-mix(in oklab, var(--ink) 6%, transparent); }
   .panel:not(.contact) { margin-bottom: 0; }
   .intro { min-height: 100svh; }
