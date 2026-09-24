@@ -60,7 +60,7 @@ const EN_JSON_LD = {
   ],
 };
 
-export const Route = createFileRoute("/en")({
+export const Route = createFileRoute("/en/")({
   head: () => ({
     meta: [
       { title: "International Market Entry & Access for B2B Tech | TRADEMARK" },
