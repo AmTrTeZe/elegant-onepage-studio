@@ -128,6 +128,8 @@ form button:disabled { cursor: default; opacity: .55; }
 .field-error { display: block; margin: -12px 0 16px; text-transform: none; font-size: 11px; font-weight: 500; letter-spacing: .02em; color: color-mix(in oklab, var(--ink) 55%, transparent); }
 label:has(.field-error) input, label:has(.field-error) textarea { border-bottom-color: var(--ink); }
 .form-error { margin: 18px 0 0; font-size: 12px; font-weight: 500; line-height: 1.55; }
+.form-privacy { max-width: 610px; margin: 18px 0 0; font-size: 10px; font-weight: 300; line-height: 1.55; color: var(--muted-foreground); }
+.form-privacy a { border-bottom: 1px solid currentColor; }
 .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 form { position: relative; }
 .form-thanks { margin-top: 26px; border-top: 1px solid currentColor; padding-top: 26px; }
@@ -137,6 +139,30 @@ footer { margin-top: 70px; padding-top: 22px; border-top: 1px solid var(--border
 footer div { display: flex; gap: 32px; text-transform: uppercase; font-size: 9px; font-weight: 600; letter-spacing: .18em; color: var(--muted-foreground); }
 .footer-link { border: 0; background: none; padding: 0; color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; border-bottom: 1px solid transparent; transition: border-color .3s ease, color .3s ease; }
 .footer-link:hover, .footer-link:focus-visible { color: var(--ink); border-bottom-color: currentColor; outline: none; }
+footer a:not(.brand):hover, footer a:not(.brand):focus-visible { color: var(--ink); }
+
+/* ---- Pages juridiques ---- */
+.legal-page { min-height: 100vh; background: var(--paper); color: var(--ink); padding-top: 78px; }
+.legal-header .language-link.is-active { font-size: 11px; font-weight: 600; letter-spacing: .18em; }
+.legal-shell { width: min(1180px, calc(100% - clamp(48px, 10vw, 128px))); margin: 0 auto; padding: clamp(76px, 10vw, 138px) 0 clamp(90px, 12vw, 170px); display: grid; grid-template-columns: minmax(260px, .72fr) minmax(0, 1.28fr); gap: clamp(70px, 10vw, 160px); align-items: start; }
+.legal-heading { position: sticky; top: 132px; }
+.legal-eyebrow { margin: 0 0 26px; text-transform: uppercase; font-size: 10px; font-weight: 600; letter-spacing: .22em; color: var(--muted-foreground); }
+.legal-heading h1 { max-width: 560px; margin: 0; text-transform: uppercase; font-size: clamp(48px, 6vw, 86px); font-weight: 800; line-height: .93; letter-spacing: 0; overflow-wrap: anywhere; }
+.legal-updated { margin: 30px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted-foreground); }
+.legal-content { font-size: 15px; line-height: 1.72; }
+.legal-content .legal-intro { padding-bottom: 42px; border-bottom: 1px solid var(--border); font-size: 19px; font-weight: 500; line-height: 1.55; }
+.legal-content section { padding: 42px 0 4px; border-bottom: 1px solid var(--border); }
+.legal-content h2 { margin: 0 0 22px; text-transform: uppercase; font-size: clamp(20px, 2vw, 29px); font-weight: 800; line-height: 1.08; letter-spacing: 0; }
+.legal-content p { margin: 0 0 20px; }
+.legal-content strong { font-weight: 600; }
+.legal-content a { border-bottom: 1px solid currentColor; font-weight: 500; }
+.legal-content ul { margin: 0 0 22px; padding-left: 19px; }
+.legal-content li + li { margin-top: 10px; }
+.legal-table-wrap { margin: 26px 0 28px; overflow-x: auto; }
+.legal-content table { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 12px; line-height: 1.55; }
+.legal-content th, .legal-content td { width: auto; padding: 15px 16px 15px 0; border-top: 1px solid var(--border); text-align: left; vertical-align: top; }
+.legal-content th { text-transform: uppercase; font-size: 9px; font-weight: 600; letter-spacing: .16em; }
+.legal-footer { width: min(1180px, calc(100% - clamp(48px, 10vw, 128px))); margin: 0 auto; padding: 25px 0 34px; }
 
 /* ---- Gestion des consentements ---- */
 .consent-banner { position: fixed; inset: auto 0 0; z-index: 90; background: var(--ink); color: var(--paper); border-top: 1px solid color-mix(in oklab, var(--paper) 18%, transparent); animation: consent-rise .6s cubic-bezier(.22,1,.36,1) both; }

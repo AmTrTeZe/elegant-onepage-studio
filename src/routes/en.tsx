@@ -556,9 +556,10 @@ function Index() {
                   {submitError && <p className="form-error" role="alert">{submitError}</p>}
                 </>
               )}
+               <p className="form-privacy">Your information is used solely to respond to your enquiry. Find out more: <a href="/en/privacy/">Privacy policy</a></p>
             </form>
           </div>
-          <footer><a className="brand" href="#introduction">TRADEMARK</a><div><span>© 2026</span><span className="language-switch"><a className="language-link" href="/" hrefLang="fr">FR</a><span aria-hidden="true">/</span><a className="language-link is-active" href="/en/" aria-current="page">EN</a></span><span>Legal notice</span><span>Privacy</span><button type="button" className="footer-link" onClick={() => window.dispatchEvent(new Event("tmrk:open-consent"))}>Cookie settings</button></div></footer>
+          <footer><a className="brand" href="#introduction">TRADEMARK</a><div><span>© 2026</span><span className="language-switch"><a className="language-link" href="/" hrefLang="fr">FR</a><span aria-hidden="true">/</span><a className="language-link is-active" href="/en/" aria-current="page">EN</a></span><a href="/en/legal-notice/">Legal notice</a><a href="/en/privacy/">Privacy</a><button type="button" className="footer-link" onClick={() => window.dispatchEvent(new Event("tmrk:open-consent"))}>Cookie settings</button></div></footer>
         </div>
       </section>
       <ConsentManager language="en" />

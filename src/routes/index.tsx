@@ -569,9 +569,10 @@ function Index() {
                   {submitError && <p className="form-error" role="alert">{submitError}</p>}
                 </>
               )}
+               <p className="form-privacy">Vos informations servent uniquement à répondre à votre demande. En savoir plus : <a href="/confidentialite/">Politique de confidentialité</a></p>
             </form>
           </div>
-          <footer><a className="brand" href="#introduction">TRADEMARK</a><div><span>© 2026</span><span className="language-switch"><a className="language-link is-active" href="/" aria-current="page">FR</a><span aria-hidden="true">/</span><a className="language-link" href="/en/" hrefLang="en">EN</a></span><span>Mentions légales</span><span>Confidentialité</span><button type="button" className="footer-link" onClick={() => window.dispatchEvent(new Event("tmrk:open-consent"))}>Gestion des cookies</button></div></footer>
+          <footer><a className="brand" href="#introduction">TRADEMARK</a><div><span>© 2026</span><span className="language-switch"><a className="language-link is-active" href="/" aria-current="page">FR</a><span aria-hidden="true">/</span><a className="language-link" href="/en/" hrefLang="en">EN</a></span><a href="/mentions-legales/">Mentions légales</a><a href="/confidentialite/">Confidentialité</a><button type="button" className="footer-link" onClick={() => window.dispatchEvent(new Event("tmrk:open-consent"))}>Gestion des cookies</button></div></footer>
         </div>
       </section>
       <ConsentManager />
