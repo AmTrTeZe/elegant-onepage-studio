@@ -13,7 +13,14 @@ export default defineConfig({
     server: { entry: "server" },
     // Pré-rendu statique : les deux pages publiques sont générées en HTML complet au build
     // (contenu + title/description/canonical/hreflang/OG/Twitter/JSON-LD).
-    pages: [{ path: "/" }, { path: "/en/" }],
+    pages: [
+      { path: "/" },
+      { path: "/en/" },
+      { path: "/mentions-legales/" },
+      { path: "/confidentialite/" },
+      { path: "/en/legal-notice/" },
+      { path: "/en/privacy/" },
+    ],
     prerender: { enabled: true, autoStaticPathsDiscovery: false },
   },
 });

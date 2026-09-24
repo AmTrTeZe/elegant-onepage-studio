@@ -10,11 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as EnRouteImport } from './routes/en'
+import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
+import { Route as EnIndexRouteImport } from './routes/en.index'
+import { Route as EnLegalNoticeRouteImport } from './routes/en.legal-notice'
+import { Route as EnPrivacyRouteImport } from './routes/en.privacy'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
+  id: '/confidentialite',
+  path: '/confidentialite',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnRoute = EnRouteImport.update({
@@ -22,31 +32,88 @@ const EnRoute = EnRouteImport.update({
   path: '/en',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
+  id: '/mentions-legales',
+  path: '/mentions-legales',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnIndexRoute = EnIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EnRoute,
+} as any)
+const EnLegalNoticeRoute = EnLegalNoticeRouteImport.update({
+  id: '/legal-notice',
+  path: '/legal-notice',
+  getParentRoute: () => EnRoute,
+} as any)
+const EnPrivacyRoute = EnPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => EnRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/en': typeof EnRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/en': typeof EnRouteWithChildren
+  '/mentions-legales': typeof MentionsLegalesRoute
+  '/en/legal-notice': typeof EnLegalNoticeRoute
+  '/en/privacy': typeof EnPrivacyRoute
+  '/en/': typeof EnIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/en': typeof EnRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
+  '/en/legal-notice': typeof EnLegalNoticeRoute
+  '/en/privacy': typeof EnPrivacyRoute
+  '/en': typeof EnIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/en': typeof EnRoute
+  '/confidentialite': typeof ConfidentialiteRoute
+  '/en': typeof EnRouteWithChildren
+  '/mentions-legales': typeof MentionsLegalesRoute
+  '/en/legal-notice': typeof EnLegalNoticeRoute
+  '/en/privacy': typeof EnPrivacyRoute
+  '/en/': typeof EnIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/en'
+  fullPaths:
+    | '/'
+    | '/confidentialite'
+    | '/en'
+    | '/mentions-legales'
+    | '/en/legal-notice'
+    | '/en/privacy'
+    | '/en/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/en'
-  id: '__root__' | '/' | '/en'
+  to:
+    | '/'
+    | '/confidentialite'
+    | '/mentions-legales'
+    | '/en/legal-notice'
+    | '/en/privacy'
+    | '/en'
+  id:
+    | '__root__'
+    | '/'
+    | '/confidentialite'
+    | '/en'
+    | '/mentions-legales'
+    | '/en/legal-notice'
+    | '/en/privacy'
+    | '/en/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  EnRoute: typeof EnRoute
+  ConfidentialiteRoute: typeof ConfidentialiteRoute
+  EnRoute: typeof EnRouteWithChildren
+  MentionsLegalesRoute: typeof MentionsLegalesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +125,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/confidentialite': {
+      id: '/confidentialite'
+      path: '/confidentialite'
+      fullPath: '/confidentialite'
+      preLoaderRoute: typeof ConfidentialiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/en': {
       id: '/en'
       path: '/en'
@@ -65,12 +139,56 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mentions-legales': {
+      id: '/mentions-legales'
+      path: '/mentions-legales'
+      fullPath: '/mentions-legales'
+      preLoaderRoute: typeof MentionsLegalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/': {
+      id: '/en/'
+      path: '/'
+      fullPath: '/en/'
+      preLoaderRoute: typeof EnIndexRouteImport
+      parentRoute: typeof EnRoute
+    }
+    '/en/legal-notice': {
+      id: '/en/legal-notice'
+      path: '/legal-notice'
+      fullPath: '/en/legal-notice'
+      preLoaderRoute: typeof EnLegalNoticeRouteImport
+      parentRoute: typeof EnRoute
+    }
+    '/en/privacy': {
+      id: '/en/privacy'
+      path: '/privacy'
+      fullPath: '/en/privacy'
+      preLoaderRoute: typeof EnPrivacyRouteImport
+      parentRoute: typeof EnRoute
+    }
   }
 }
 
+interface EnRouteChildren {
+  EnLegalNoticeRoute: typeof EnLegalNoticeRoute
+  EnPrivacyRoute: typeof EnPrivacyRoute
+  EnIndexRoute: typeof EnIndexRoute
+}
+
+const EnRouteChildren: EnRouteChildren = {
+  EnLegalNoticeRoute: EnLegalNoticeRoute,
+  EnPrivacyRoute: EnPrivacyRoute,
+  EnIndexRoute: EnIndexRoute,
+}
+
+const EnRouteWithChildren = EnRoute._addFileChildren(EnRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  EnRoute: EnRoute,
+  ConfidentialiteRoute: ConfidentialiteRoute,
+  EnRoute: EnRouteWithChildren,
+  MentionsLegalesRoute: MentionsLegalesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -9,106 +9,93 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 function validate(fields: Record<FieldName, string>): FieldErrors {
   const errors: FieldErrors = {};
-  if (!fields.firstName.trim()) errors.firstName = "Merci d’indiquer votre prénom.";
-  if (!fields.lastName.trim()) errors.lastName = "Merci d’indiquer votre nom.";
-  if (!fields.company.trim()) errors.company = "Merci d’indiquer le nom de votre entreprise.";
+  if (!fields.firstName.trim()) errors.firstName = "Please enter your first name.";
+  if (!fields.lastName.trim()) errors.lastName = "Please enter your last name.";
+  if (!fields.company.trim()) errors.company = "Please enter your company name.";
   if (!EMAIL_PATTERN.test(fields.email.trim()))
-    errors.email = "Merci d’indiquer une adresse e-mail valide.";
-  if (!fields.message.trim()) errors.message = "Merci de préciser l’objet de votre demande.";
+    errors.email = "Please enter a valid email address.";
+  if (!fields.message.trim()) errors.message = "Please tell us how we can help.";
   return errors;
 }
 
-const FR_DESCRIPTION =
-  "TRADEMARK aide les entreprises technologiques B2B à ouvrir de nouveaux marchés internationaux : qualification, relais locaux et accès aux décideurs.";
-const FR_OG_DESCRIPTION =
-  "TRADEMARK ouvre l'accès à des marchés internationaux à fort potentiel pour des entreprises technologiques B2B : qualification, relais locaux et accès aux décideurs.";
-const FR_OG_TITLE = "Et si vos angles morts devenaient des relais de croissance ?";
+const EN_DESCRIPTION =
+  "TRADEMARK helps B2B tech companies enter high-potential international markets: opportunity qualification, trusted local networks, decision-maker access.";
+const EN_OG_DESCRIPTION =
+  "TRADEMARK helps proven B2B technologies access high-potential international markets through qualification, trusted local networks and decision-maker access.";
+const EN_OG_TITLE = "What if your blind spots became growth engines?";
 
-const FR_JSON_LD = {
+const EN_JSON_LD = {
   "@context": "https://schema.org",
-  "@graph": [
+  "@type": "Organization",
+  "@id": "https://www.tmrk.fr/#organization",
+  name: "TRADEMARK",
+  url: "https://www.tmrk.fr/",
+  email: "contact@tmrk.fr",
+  logo: "https://www.tmrk.fr/logo-512.png",
+  description:
+    "Firm specialised in bringing high-impact B2B technologies to high-potential international markets.",
+  areaServed: "Worldwide",
+  knowsLanguage: ["fr", "en"],
+  address: [
     {
-      "@type": "Organization",
-      "@id": "https://www.tmrk.fr/#organization",
-      name: "TRADEMARK",
-      url: "https://www.tmrk.fr/",
-      email: "contact@tmrk.fr",
-      logo: "https://www.tmrk.fr/logo-512.png",
-      description:
-        "Cabinet spécialisé dans l’introduction de technologies B2B à fort impact sur des marchés internationaux à haut potentiel.",
-      areaServed: "Worldwide",
-      knowsLanguage: ["fr", "en"],
-      address: [
-        {
-          "@type": "PostalAddress",
-          streetAddress: "134-136 boulevard Brune",
-          postalCode: "75014",
-          addressLocality: "Paris",
-          addressCountry: "FR",
-        },
-        {
-          "@type": "PostalAddress",
-          streetAddress: "Appartement n°4, Résidence Hamza, Quartier Palmier",
-          postalCode: "20340",
-          addressLocality: "Casablanca",
-          addressCountry: "MA",
-        },
-        {
-          "@type": "PostalAddress",
-          streetAddress: "II Plateaux Vallon, villa lot 522, parcelle 222, Cocody",
-          addressLocality: "Abidjan",
-          addressCountry: "CI",
-        },
-      ],
+      "@type": "PostalAddress",
+      streetAddress: "134-136 boulevard Brune",
+      postalCode: "75014",
+      addressLocality: "Paris",
+      addressCountry: "FR",
     },
     {
-      "@type": "WebSite",
-      "@id": "https://www.tmrk.fr/#website",
-      url: "https://www.tmrk.fr/",
-      name: "TRADEMARK",
-      alternateName: "tmrk.fr",
-      inLanguage: "fr-FR",
-      publisher: { "@id": "https://www.tmrk.fr/#organization" },
+      "@type": "PostalAddress",
+      streetAddress: "Appartement n°4, Résidence Hamza, Quartier Palmier",
+      postalCode: "20340",
+      addressLocality: "Casablanca",
+      addressCountry: "MA",
+    },
+    {
+      "@type": "PostalAddress",
+      streetAddress: "II Plateaux Vallon, villa lot 522, parcelle 222, Cocody",
+      addressLocality: "Abidjan",
+      addressCountry: "CI",
     },
   ],
 };
 
-export const Route = createFileRoute("/")({
+export const Route = createFileRoute("/en/")({
   head: () => ({
     meta: [
-      { title: "Accès aux marchés internationaux | Technologies B2B | TRADEMARK" },
-      { name: "description", content: FR_DESCRIPTION },
+      { title: "International Market Entry & Access for B2B Tech | TRADEMARK" },
+      { name: "description", content: EN_DESCRIPTION },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "TRADEMARK" },
-      { property: "og:locale", content: "fr_FR" },
-      { property: "og:locale:alternate", content: "en_GB" },
-      { property: "og:url", content: "https://www.tmrk.fr/" },
-      { property: "og:title", content: FR_OG_TITLE },
-      { property: "og:description", content: FR_OG_DESCRIPTION },
-      { property: "og:image", content: "https://www.tmrk.fr/og-fr.png" },
+      { property: "og:locale", content: "en_GB" },
+      { property: "og:locale:alternate", content: "fr_FR" },
+      { property: "og:url", content: "https://www.tmrk.fr/en/" },
+      { property: "og:title", content: EN_OG_TITLE },
+      { property: "og:description", content: EN_OG_DESCRIPTION },
+      { property: "og:image", content: "https://www.tmrk.fr/og-en.png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { property: "og:image:alt", content: `TRADEMARK — ${FR_OG_TITLE}` },
+      { property: "og:image:alt", content: `TRADEMARK — ${EN_OG_TITLE}` },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: FR_OG_TITLE },
-      { name: "twitter:description", content: FR_OG_DESCRIPTION },
-      { name: "twitter:image", content: "https://www.tmrk.fr/og-fr.png" },
+      { name: "twitter:title", content: EN_OG_TITLE },
+      { name: "twitter:description", content: EN_OG_DESCRIPTION },
+      { name: "twitter:image", content: "https://www.tmrk.fr/og-en.png" },
     ],
-    links: [{ rel: "canonical", href: "https://www.tmrk.fr/" }],
+    links: [{ rel: "canonical", href: "https://www.tmrk.fr/en/" }],
     scripts: [
-      { type: "application/ld+json", children: JSON.stringify(FR_JSON_LD) },
+      { type: "application/ld+json", children: JSON.stringify(EN_JSON_LD) },
     ],
   }),
   component: Index,
 });
 
 const criteria = [
-  ["01", "Éprouvée", "Des solutions déjà déployées, avec des références clients vérifiables."],
-  ["02", "Forte valeur d’usage", "Une réponse directe à une friction opérationnelle identifiée."],
-  ["03", "Rapidement déployable", "Une mise en service qui se compte en semaines, pas en années."],
-  ["04", "Plug & play", "Une intégration légère, sans refonte du système existant."],
-  ["05", "Agnostique", "Compatible avec les environnements techniques déjà en place."],
-  ["06", "ROI démontrable", "Un retour sur investissement mesurable en quelques mois."],
+  ["01", "Proven", "Solutions already deployed, with verifiable client references."],
+  ["02", "High practical value", "A direct answer to an identified operational friction."],
+  ["03", "Fast to deploy", "Up and running in weeks, not years."],
+  ["04", "Plug & play", "Light integration, with no overhaul of existing systems."],
+  ["05", "System-agnostic", "Compatible with the technical environments already in place."],
+  ["06", "Demonstrable ROI", "A measurable return on investment within months."],
 ];
 
 function SectionHeader({ number, title, side }: { number: string; title: string; side: string }) {
@@ -420,7 +407,7 @@ function Index() {
       const response = await fetch("/contact.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...fields, telephone: String(data.get("telephone") ?? "") }),
+        body: JSON.stringify({ ...fields, telephone: String(data.get("telephone") ?? ""), language: "en" }),
       });
       const result = (await response.json()) as {
         ok: boolean;
@@ -433,11 +420,11 @@ function Index() {
         setSent(true);
         return;
       }
-      if (result.errors) setErrors(result.errors);
-      setSubmitError(result.message);
+      if (result.errors) setErrors(validate(fields));
+      setSubmitError("We were unable to send your message. Please check the information provided and try again.");
     } catch {
       setSubmitError(
-        "Une erreur est survenue lors de l’envoi. Merci de réessayer dans quelques instants.",
+        "We were unable to send your message. Please try again in a few moments.",
       );
     } finally {
       setSending(false);
@@ -447,54 +434,54 @@ function Index() {
   return (
     <main>
       <header className="site-header">
-        <a className="brand" href="#introduction" aria-label="TRADEMARK — accueil">TRADEMARK</a>
-        <nav aria-label="Navigation principale">
-          <a href="#approche">Approche</a>
-          <a href="#reseau">Accès marchés</a>
-          <a href="#intervention">Notre rôle</a>
+        <a className="brand" href="#introduction" aria-label="TRADEMARK — home">TRADEMARK</a>
+        <nav aria-label="Main navigation">
+          <a href="#approche">Approach</a>
+          <a href="#reseau">Market access</a>
+          <a href="#intervention">Our role</a>
           <a href="#contact">Contact</a>
           <span className="language-switch">
-            <a className="language-link is-active" href="/" aria-current="page">FR</a>
+            <a className="language-link" href="/" hrefLang="fr" aria-label="Version française">FR</a>
             <span aria-hidden="true">/</span>
-            <a className="language-link" href="/en/" hrefLang="en" aria-label="English version">EN</a>
+            <a className="language-link is-active" href="/en/" aria-current="page">EN</a>
           </span>
         </nav>
       </header>
 
       <section className="panel panel-light intro" id="introduction">
         <div className="page-shell">
-          <SectionHeader number="01" title="Introduction" side="Bureaux · Paris · Casablanca · Abidjan" />
+          <SectionHeader number="01" title="Introduction" side="Offices · Paris · Casablanca · Abidjan" />
           <h1 className="display display-intro display-sweep" data-reveal="title">
-            <span>Et si vos angles</span><span>morts devenaient</span><span>des relais de</span><span>croissance ?</span>
+            <span>What if your blind</span><span>spots became</span><span>growth engines?</span>
           </h1>
           <div className="intro-footer" data-reveal="body">
-            <p>TRADEMARK est un cabinet spécialisé dans l’introduction de technologies à fort impact sur des marchés internationaux à haut potentiel, au-delà des géographies directement couvertes par leurs éditeurs.</p>
-            <a className="text-link" href="#contact">Parlons-en <span aria-hidden="true">→</span></a>
+            <p>TRADEMARK specialises in bringing high-impact technologies to high-potential international markets, beyond the geographies their vendors cover directly.</p>
+            <a className="text-link" href="#contact">Let’s talk <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </section>
 
       <section className="panel panel-dark" id="contexte">
         <div className="page-shell">
-          <SectionHeader number="02" title="Contexte" side="Le constat" />
-           <h2 className="display display-section" data-reveal="title"><span>La croissance</span><span>impose des choix.</span></h2>
+          <SectionHeader number="02" title="Context" side="The challenge" />
+           <h2 className="display display-section" data-reveal="title"><span>Growth demands</span><span>choices.</span></h2>
            <div className="two-cols body-copy" data-reveal="body">
-            <p>Pour les startups technologiques, la croissance impose des choix. Dans un environnement où les financements sont plus exigeants et la trajectoire vers la rentabilité davantage scrutée, les ressources se concentrent naturellement sur quelques marchés prioritaires capables de soutenir rapidement le passage à l’échelle.</p>
-            <p>Cette discipline est nécessaire. Mais elle laisse aussi de côté des marchés où les besoins existent, où le potentiel commercial est réel et que les équipes internes ne peuvent raisonnablement adresser sans présence, réseau ou relais local.</p>
+            <p>For technology start-ups, growth demands choices. With funding harder to secure and the path to profitability under closer scrutiny, resources naturally concentrate on a few priority markets able to support rapid scale-up.</p>
+            <p>This discipline is necessary. But it also leaves aside markets where the needs are real, where the commercial potential is genuine, and which internal teams cannot reasonably address without a local presence, network or partner.</p>
           </div>
-           <p className="closing-line" data-reveal="lead">C’est précisément là que <strong>TRADEMARK</strong> intervient.</p>
+           <p className="closing-line" data-reveal="lead">This is precisely where <strong>TRADEMARK</strong> comes in.</p>
         </div>
       </section>
 
       <section className="panel panel-light" id="approche">
         <div className="page-shell">
-          <SectionHeader number="03" title="Approche" side="Méthode" />
-           <h2 className="display display-section" data-reveal="title"><span>Partir du besoin, pas</span><span>de la technologie</span></h2>
+          <SectionHeader number="03" title="Approach" side="Method" />
+           <h2 className="display display-section" data-reveal="title"><span>Start from the need,</span><span>not the technology</span></h2>
            <div className="two-cols body-copy approach-copy" data-reveal="body">
-            <p>Notre ADN de cabinet indépendant spécialisé en stratégie d’innovation et en performance des organisations structure notre approche : nous partons des frictions opérationnelles rencontrées par les entreprises locales pour identifier les technologies capables de réellement les résoudre.</p>
-            <p>Cette exigence nous permet de concentrer nos efforts sur les technologies dont la proposition de valeur répond à un besoin concret et dont l’impact peut être rapidement démontré.</p>
+            <p>Our DNA as an independent firm specialising in innovation strategy and organisational performance shapes our approach: we start from the operational friction local companies face, then identify the technologies that can genuinely resolve it.</p>
+            <p>This discipline lets us focus on technologies whose value proposition meets a concrete need and whose impact can be demonstrated quickly.</p>
           </div>
-           <p className="micro-title" data-reveal="label">Nos critères de sélection</p>
+           <p className="micro-title" data-reveal="label">Our selection criteria</p>
           <div className="criteria-grid">
             {criteria.map(([number, title, copy]) => (
                <article className="criterion" data-reveal="item" key={number}>
@@ -507,75 +494,75 @@ function Index() {
 
       <section className="panel panel-light" id="reseau">
         <div className="page-shell">
-          <SectionHeader number="04" title="Accès Marchés" side="Accès aux décideurs" />
-           <h2 className="display display-section" data-reveal="title"><span>Ouvrir de</span><span>nouveaux marchés</span></h2>
+          <SectionHeader number="04" title="Market Access" side="Access to decision-makers" />
+           <h2 className="display display-section" data-reveal="title"><span>Opening</span><span>new markets</span></h2>
            <div className="network-copy" data-reveal="body">
-            <p className="lead">Pénétrer un nouveau marché exige plus qu’une démarche commerciale : il faut en comprendre les acteurs, les circuits de décision et disposer des bons relais.</p>
-            <div className="body-copy"><p>L’expérience de nos équipes au sein de grands réseaux internationaux de conseil et de communication nous a permis de constituer, dans plusieurs pays, un réseau de contacts et de relais locaux de confiance, profondément ancrés dans leurs écosystèmes économiques.</p><p>Ces relais nous donnent accès aux bons niveaux de décision des entreprises leaders, nous aident à qualifier les enjeux locaux et nous permettent d’identifier plus rapidement les opportunités pertinentes, en organisant des introductions auprès des directions générales, technologiques et opérationnelles concernées.</p></div>
+            <p className="lead">Entering a new market takes more than a sales effort: you need to understand its players and decision-making circuits, and to have the right local partners.</p>
+            <div className="body-copy"><p>Our teams’ experience within major international consulting and communications networks has allowed us to build, in several countries, a network of trusted local contacts and partners deeply rooted in their economic ecosystems.</p><p>These partners give us access to the right decision-making levels in leading companies, help us assess local issues and identify relevant opportunities faster, by arranging introductions to the relevant executive, technology and operations leadership.</p></div>
           </div>
-           <p className="micro-title" data-reveal="label">Trois leviers combinés</p>
+           <p className="micro-title" data-reveal="label">Three combined levers</p>
           <div className="lever-grid">
-             <article data-reveal="item"><h3>Compréhension<br />du marché</h3></article>
-             <article data-reveal="item"><h3>Relais<br />locaux</h3></article>
-             <article data-reveal="item"><h3>Accès aux<br />décideurs</h3></article>
+             <article data-reveal="item"><h3>Market<br />understanding</h3></article>
+             <article data-reveal="item"><h3>Trusted local<br />networks</h3></article>
+             <article data-reveal="item"><h3>Access to<br />decision-makers</h3></article>
           </div>
         </div>
       </section>
 
       <section className="panel panel-dark" id="intervention">
         <div className="page-shell">
-          <SectionHeader number="05" title="Notre Rôle" side="Périmètre" />
-           <h2 className="display display-section" data-reveal="title"><span>Relais locaux pour</span><span>technologies globales</span></h2>
-           <p className="intervention-intro body-copy" data-reveal="body">TRADEMARK permet aux entreprises technologiques d’aborder des marchés qu’elles ne pourraient pas nécessairement adresser avec leurs seules équipes, sans engager en amont les coûts de prospection, de réseau et de présence locale qu’exigerait une approche directe.</p>
+          <SectionHeader number="05" title="Our Role" side="Scope" />
+           <h2 className="display display-section" data-reveal="title"><span>Local access for</span><span>global technologies</span></h2>
+           <p className="intervention-intro body-copy" data-reveal="body">TRADEMARK enables technology companies to approach markets they could not necessarily address with their own teams, without committing upfront to the prospecting, networking and local-presence costs a direct approach would require.</p>
            <div className="scope-grid" data-reveal="item">
-            <div><p className="micro-title">Ce que nous prenons en charge</p><ul><li>Identification des opportunités</li><li>Qualification des comptes</li><li>Accès aux décideurs</li><li>Organisation des introductions</li></ul></div>
-            <div className="muted-scope"><p className="micro-title">Ce qui vous revient</p><ul><li>Modèle de déploiement</li><li>Contractualisation</li><li>Déploiement et support</li><li>Développement du marché</li></ul></div>
+            <div><p className="micro-title">What we take on</p><ul><li>Identifying opportunities</li><li>Qualifying accounts</li><li>Access to decision-makers</li><li>Arranging introductions</li></ul></div>
+            <div className="muted-scope"><p className="micro-title">What remains yours</p><ul><li>Deployment model</li><li>Contracting</li><li>Deployment and support</li><li>Market development</li></ul></div>
           </div>
-           <p className="closing-line" data-reveal="lead">Notre rôle s’arrête là où commence celui de l’éditeur.</p>
+           <p className="closing-line" data-reveal="lead">Our role ends where the vendor’s begins.</p>
         </div>
       </section>
 
       <section className="panel panel-light contact" id="contact">
         <div className="page-shell">
-          <SectionHeader number="06" title="Contact" side="Bureaux · Paris · Casablanca · Abidjan" />
-           <p className="contact-lead" data-reveal="lead">Vous développez une technologie éprouvée, à ROI rapide, et certains marchés<br className="desktop-break" /> restent hors de vos priorités immédiates ?</p>
-           <h2 className="display contact-title" data-reveal="title">Parlons-en.</h2>
+          <SectionHeader number="06" title="Contact" side="Offices · Paris · Casablanca · Abidjan" />
+           <p className="contact-lead" data-reveal="lead">Do you have a proven, fast-ROI technology, with some markets<br className="desktop-break" /> still outside your immediate priorities?</p>
+           <h2 className="display contact-title" data-reveal="title">Let’s talk.</h2>
           <div className="contact-grid">
              <aside className="offices" data-reveal="body">
-              <h3 className="micro-title">Nos bureaux</h3>
+              <h3 className="micro-title">Our offices</h3>
               <h3>Paris</h3><p>134-136 boulevard Brune<br />75014 Paris</p>
-              <h3>Casablanca</h3><p>Appartement n°4, Résidence Hamza<br />Quartier Palmier — 20340</p>
-              <h3>Abidjan</h3><p>II Plateaux Vallon, villa lot 522<br />parcelle 222, Cocody</p>
+               <h3>Casablanca</h3><p>Apartment 4, Hamza Residence<br />Palmier District — 20340</p>
+               <h3>Abidjan</h3><p>II Plateaux Vallon, villa lot 522<br />plot 222, Cocody</p>
               <a href="mailto:contact@tmrk.fr">contact@tmrk.fr</a>
             </aside>
               <form ref={formRef} onSubmit={submit} data-reveal="body" noValidate>
-              <p className="micro-title">Écrivez-nous</p>
+              <p className="micro-title">Write to us</p>
               {sent ? (
                 <div className="form-thanks" role="status">
-                  <p className="form-thanks-title">Merci, nous revenons vers vous rapidement.</p>
-                  <p>Votre message a bien été transmis. Notre équipe en prendra connaissance avec attention.</p>
+                  <p className="form-thanks-title">Thank you, we will get back to you shortly.</p>
+                  <p>Your message has been sent and our team will review it carefully.</p>
                 </div>
               ) : (
                 <>
                   <div className="form-grid">
-                    <label htmlFor="fr-firstName">Prénom<input id="fr-firstName" name="firstName" type="text" autoComplete="given-name" maxLength={100} />{errors.firstName && <span className="field-error">{errors.firstName}</span>}</label>
-                    <label htmlFor="fr-lastName">Nom<input id="fr-lastName" name="lastName" type="text" autoComplete="family-name" maxLength={100} />{errors.lastName && <span className="field-error">{errors.lastName}</span>}</label>
-                    <label htmlFor="fr-company">Entreprise<input id="fr-company" name="company" type="text" autoComplete="organization" maxLength={100} />{errors.company && <span className="field-error">{errors.company}</span>}</label>
-                    <label htmlFor="fr-email">E-mail<input id="fr-email" type="email" name="email" autoComplete="email" maxLength={255} />{errors.email && <span className="field-error">{errors.email}</span>}</label>
-                    <label className="full" htmlFor="fr-message">Objet<textarea id="fr-message" name="message" rows={2} maxLength={2000} />{errors.message && <span className="field-error">{errors.message}</span>}</label>
+                    <label htmlFor="en-firstName">First name<input id="en-firstName" name="firstName" type="text" autoComplete="given-name" maxLength={100} />{errors.firstName && <span className="field-error">{errors.firstName}</span>}</label>
+                    <label htmlFor="en-lastName">Last name<input id="en-lastName" name="lastName" type="text" autoComplete="family-name" maxLength={100} />{errors.lastName && <span className="field-error">{errors.lastName}</span>}</label>
+                    <label htmlFor="en-company">Company<input id="en-company" name="company" type="text" autoComplete="organization" maxLength={100} />{errors.company && <span className="field-error">{errors.company}</span>}</label>
+                    <label htmlFor="en-email">Email<input id="en-email" type="email" name="email" autoComplete="email" maxLength={255} />{errors.email && <span className="field-error">{errors.email}</span>}</label>
+                    <label className="full" htmlFor="en-message">Subject<textarea id="en-message" name="message" rows={2} maxLength={2000} />{errors.message && <span className="field-error">{errors.message}</span>}</label>
                     <input className="hp-field" type="text" name="telephone" tabIndex={-1} autoComplete="off" aria-hidden="true" />
                   </div>
-                  <button type="submit" disabled={sending}>{sending ? "Envoi en cours…" : "Envoyer"}</button>
+                  <button type="submit" disabled={sending}>{sending ? "Sending…" : "Send"}</button>
                   {submitError && <p className="form-error" role="alert">{submitError}</p>}
                 </>
               )}
-               <p className="form-privacy">Vos informations servent uniquement à répondre à votre demande. En savoir plus : <a href="/confidentialite/">Politique de confidentialité</a></p>
+               <p className="form-privacy">Your information is used solely to respond to your enquiry. Find out more: <a href="/en/privacy/">Privacy policy</a></p>
             </form>
           </div>
-          <footer><a className="brand" href="#introduction">TRADEMARK</a><div><span>© 2026</span><span className="language-switch"><a className="language-link is-active" href="/" aria-current="page">FR</a><span aria-hidden="true">/</span><a className="language-link" href="/en/" hrefLang="en">EN</a></span><a href="/mentions-legales/">Mentions légales</a><a href="/confidentialite/">Confidentialité</a><button type="button" className="footer-link" onClick={() => window.dispatchEvent(new Event("tmrk:open-consent"))}>Gestion des cookies</button></div></footer>
+          <footer><a className="brand" href="#introduction">TRADEMARK</a><div><span>© 2026</span><span className="language-switch"><a className="language-link" href="/" hrefLang="fr">FR</a><span aria-hidden="true">/</span><a className="language-link is-active" href="/en/" aria-current="page">EN</a></span><a href="/en/legal-notice/">Legal notice</a><a href="/en/privacy/">Privacy</a><button type="button" className="footer-link" onClick={() => window.dispatchEvent(new Event("tmrk:open-consent"))}>Cookie settings</button></div></footer>
         </div>
       </section>
-      <ConsentManager />
+      <ConsentManager language="en" />
     </main>
   );
 }

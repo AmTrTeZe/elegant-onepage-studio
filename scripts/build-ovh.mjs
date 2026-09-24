@@ -69,6 +69,10 @@ console.log("[build:ovh] 3/3 — vérifications…");
 const required = [
   "index.html",
   path.join("en", "index.html"),
+  path.join("mentions-legales", "index.html"),
+  path.join("confidentialite", "index.html"),
+  path.join("en", "legal-notice", "index.html"),
+  path.join("en", "privacy", "index.html"),
   "contact.php",
   "consent.php",
   "robots.txt",

@@ -13,4 +13,24 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://www.tmrk.fr/en/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tmrk.fr/en/"/>
   </url>
+  <url>
+    <loc>https://www.tmrk.fr/mentions-legales/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.tmrk.fr/mentions-legales/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.tmrk.fr/en/legal-notice/"/>
+  </url>
+  <url>
+    <loc>https://www.tmrk.fr/en/legal-notice/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.tmrk.fr/mentions-legales/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.tmrk.fr/en/legal-notice/"/>
+  </url>
+  <url>
+    <loc>https://www.tmrk.fr/confidentialite/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.tmrk.fr/confidentialite/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.tmrk.fr/en/privacy/"/>
+  </url>
+  <url>
+    <loc>https://www.tmrk.fr/en/privacy/</loc>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://www.tmrk.fr/confidentialite/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.tmrk.fr/en/privacy/"/>
+  </url>
 </urlset>
