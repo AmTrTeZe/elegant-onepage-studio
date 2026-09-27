@@ -9,9 +9,10 @@ type LegalPageProps = {
   updated: string;
   children: ReactNode;
   alternatePath: "/mentions-legales/" | "/confidentialite/" | "/en/legal-notice/" | "/en/privacy/";
+  titleInContent?: boolean;
 };
 
-export default function LegalPage({ language, eyebrow, title, updated, children, alternatePath }: LegalPageProps) {
+export default function LegalPage({ language, eyebrow, title, updated, children, alternatePath, titleInContent = false }: LegalPageProps) {
   const english = language === "en";
 
   return (
