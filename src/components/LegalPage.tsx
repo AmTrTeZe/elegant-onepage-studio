@@ -9,9 +9,10 @@ type LegalPageProps = {
   updated: string;
   children: ReactNode;
   alternatePath: "/mentions-legales/" | "/confidentialite/" | "/en/legal-notice/" | "/en/privacy/";
+  titleInContent?: boolean;
 };
 
-export default function LegalPage({ language, eyebrow, title, updated, children, alternatePath }: LegalPageProps) {
+export default function LegalPage({ language, eyebrow, title, updated, children, alternatePath, titleInContent = false }: LegalPageProps) {
   const english = language === "en";
 
   return (
@@ -38,13 +39,16 @@ export default function LegalPage({ language, eyebrow, title, updated, children,
         </nav>
       </header>
 
-      <article className="legal-shell">
+      <article className={`legal-shell${titleInContent ? " legal-shell-compact" : ""}`}>
         <div className="legal-heading">
           <p className="legal-eyebrow">{eyebrow}</p>
-          <h1>{title}</h1>
+          {!titleInContent && <h1>{title}</h1>}
           <p className="legal-updated">{updated}</p>
         </div>
-        <div className="legal-content">{children}</div>
+        <div className="legal-content">
+          {titleInContent && <h1 className="legal-content-title">{title}</h1>}
+          {children}
+        </div>
       </article>
 
       <footer className="legal-footer">
