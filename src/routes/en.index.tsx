@@ -531,7 +531,7 @@ function Index() {
              <aside className="offices" data-reveal="body">
               <h3 className="micro-title">Our offices</h3>
               <h3>Paris</h3><p>134-136 boulevard Brune<br />75014 Paris</p>
-               <h3>Casablanca</h3><p>Rue Soumaya, Shahrazade 3 Residence, No. 22, 5th floor<br />Palmiers 2000</p>
+               <h3>Casablanca</h3><p>Rue Soumaya, Shahrazade 3 Residence<br />No. 22, 5th floor<br />Palmiers 2000</p>
                <h3>Abidjan</h3><p>II Plateaux Vallon, villa lot 522<br />plot 222, Cocody</p>
               <a href="mailto:contact@tmrk.fr">contact@tmrk.fr</a>
             </aside>
