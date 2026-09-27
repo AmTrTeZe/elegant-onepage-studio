@@ -291,7 +291,7 @@ footer a:not(.brand):hover::after, footer a:not(.brand):focus-visible::after { t
   .legal-header nav { align-items: center; }
   .legal-shell { width: calc(100% - 40px); padding: 58px 0 90px; grid-template-columns: 1fr; gap: 58px; }
   .legal-heading { position: static; }
-  .legal-heading h1 { font-size: clamp(24px, 7.2vw, 35px); }
+  .legal-heading h1, .legal-content-title { font-size: clamp(24px, 7.2vw, 35px); }
   .legal-content { font-size: 14px; }
   .legal-content .legal-intro { font-size: 17px; }
   .legal-content section { padding-top: 34px; }
