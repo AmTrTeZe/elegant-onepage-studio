@@ -48,8 +48,8 @@ const FR_JSON_LD = {
         },
         {
           "@type": "PostalAddress",
-          streetAddress: "Appartement n°4, Résidence Hamza, Quartier Palmier",
-          postalCode: "20340",
+          streetAddress: "Rue Soumaya, Résidence Shahrazade 3, N° 22, 5ème étage",
+          postalCode: "2000",
           addressLocality: "Casablanca",
           addressCountry: "MA",
         },
@@ -544,7 +544,7 @@ function Index() {
              <aside className="offices" data-reveal="body">
               <h3 className="micro-title">Nos bureaux</h3>
               <h3>Paris</h3><p>134-136 boulevard Brune<br />75014 Paris</p>
-              <h3>Casablanca</h3><p>Appartement n°4, Résidence Hamza<br />Quartier Palmier — 20340</p>
+              <h3>Casablanca</h3><p>Rue Soumaya, Résidence Shahrazade 3, N° 22, 5ème étage<br />Palmiers 2000</p>
               <h3>Abidjan</h3><p>II Plateaux Vallon, villa lot 522<br />parcelle 222, Cocody</p>
               <a href="mailto:contact@tmrk.fr">contact@tmrk.fr</a>
             </aside>
