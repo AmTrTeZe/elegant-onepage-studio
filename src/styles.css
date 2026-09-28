@@ -288,7 +288,8 @@ footer a:not(.brand):hover::after, footer a:not(.brand):focus-visible::after { t
   .menu-toggle { position: relative; z-index: 2; display: inline-flex; width: 42px; height: 42px; border-radius: 0; padding: 0; background: transparent; color: currentColor; box-shadow: none; }
   .menu-toggle:hover, .menu-toggle:focus-visible { background: transparent; color: currentColor; }
   .menu-toggle svg { width: 23px; height: 23px; }
-  .home-header nav { position: fixed; inset: 66px 0 auto; display: grid; grid-template-columns: 1fr; gap: 0; height: calc(100svh - 66px); max-height: 0; padding: 0 20px; overflow: hidden; visibility: hidden; background: inherit; color: inherit; border-bottom: 1px solid transparent; opacity: 0; transition: max-height .45s cubic-bezier(.22,1,.36,1), padding .45s cubic-bezier(.22,1,.36,1), opacity .25s ease, visibility 0s .45s, border-color .3s ease; }
+  .home-header nav { position: fixed; inset: 66px 0 auto; display: grid; grid-template-columns: 1fr; gap: 0; height: calc(100svh - 66px); max-height: 0; padding: 0 20px; overflow: hidden; visibility: hidden; background: var(--paper); color: var(--ink); border-bottom: 1px solid transparent; opacity: 0; transition: max-height .45s cubic-bezier(.22,1,.36,1), padding .45s cubic-bezier(.22,1,.36,1), opacity .25s ease, visibility 0s .45s, border-color .3s ease; }
+  .home-header[data-theme="dark"] nav { background: var(--ink); color: var(--paper); }
   .home-header nav.is-open { max-height: calc(100svh - 66px); padding-block: 24px 30px; overflow-y: auto; visibility: visible; border-bottom-color: color-mix(in oklab, currentColor 22%, transparent); opacity: 1; transition-delay: 0s; }
   .home-header nav > a { padding: 17px 0; border-bottom: 1px solid color-mix(in oklab, currentColor 18%, transparent); font-size: 20px; line-height: 1.1; letter-spacing: 0; }
   .home-header nav a::after { bottom: 11px; right: auto; width: 32px; }
