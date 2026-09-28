@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Menu, X } from "lucide-react";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import ConsentManager from "@/components/ConsentManager";
+import { Button } from "@/components/ui/button";
 
 type FieldName = "firstName" | "lastName" | "company" | "email" | "message";
 type FieldErrors = Partial<Record<FieldName, string>>;
@@ -121,11 +123,26 @@ function SectionHeader({ number, title, side }: { number: string; title: string;
 }
 
 function Index() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitError, setSubmitError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     const items = Array.from(
@@ -448,11 +465,14 @@ function Index() {
     <main>
       <header className="site-header">
         <a className="brand" href="#introduction" aria-label="TRADEMARK — accueil">TRADEMARK</a>
-        <nav aria-label="Navigation principale">
-          <a href="#approche">Approche</a>
-          <a href="#reseau">Accès marchés</a>
-          <a href="#intervention">Notre rôle</a>
-          <a href="#contact">Contact</a>
+        <Button className="menu-toggle" variant="ghost" size="icon" type="button" aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"} aria-controls="main-navigation-fr" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
+          {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+        </Button>
+        <nav id="main-navigation-fr" className={menuOpen ? "is-open" : ""} aria-label="Navigation principale">
+          <a href="#approche" onClick={() => setMenuOpen(false)}>Approche</a>
+          <a href="#reseau" onClick={() => setMenuOpen(false)}>Accès marchés</a>
+          <a href="#intervention" onClick={() => setMenuOpen(false)}>Notre rôle</a>
+          <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
           <span className="language-switch">
             <a className="language-link is-active" href="/" aria-current="page">FR</a>
             <span aria-hidden="true">/</span>
@@ -548,7 +568,7 @@ function Index() {
               <h3>Abidjan</h3><p>II Plateaux Vallon, villa lot 522<br />parcelle 222, Cocody</p>
               <a href="mailto:contact@tmrk.fr">contact@tmrk.fr</a>
             </aside>
-              <form ref={formRef} onSubmit={submit} data-reveal="body" noValidate>
+               <form className="contact-form" ref={formRef} onSubmit={submit} data-reveal="body" noValidate>
               <p className="micro-title">Écrivez-nous</p>
               {sent ? (
                 <div className="form-thanks" role="status">

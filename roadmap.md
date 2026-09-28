@@ -3,3 +3,4 @@
 - [x] SEO : structure FR + /en/, police @fontsource/archivo, icônes et images OG, métadonnées et JSON-LD par page, robots.txt et sitemap.xml, formulaire avec labels liés
 - [ ] Choisir la solution d envoi du formulaire vers contact@tmrk.fr
 - [x] Ajouter les pages juridiques françaises et anglaises, leurs liens et leur pré-rendu OVH
+- [x] Optimiser la navigation, les grands titres et l’ordre du contact sur mobile
