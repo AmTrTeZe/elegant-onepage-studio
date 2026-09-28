@@ -284,16 +284,18 @@ footer a:not(.brand):hover::after, footer a:not(.brand):focus-visible::after { t
 
 @media (max-width: 760px) {
   .site-header { height: 66px; padding-inline: 20px; display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-  .site-header .brand { position: relative; z-index: 2; min-width: 0; font-size: 11px; }
+  .home-header .brand { position: relative; z-index: 2; min-width: 0; font-size: 11px; }
   .menu-toggle { position: relative; z-index: 2; display: inline-flex; width: 42px; height: 42px; border-radius: 0; padding: 0; background: transparent; color: currentColor; box-shadow: none; }
   .menu-toggle:hover, .menu-toggle:focus-visible { background: transparent; color: currentColor; }
   .menu-toggle svg { width: 23px; height: 23px; }
-  .site-header nav { position: fixed; inset: 66px 0 auto; display: grid; grid-template-columns: 1fr; gap: 0; max-height: 0; padding: 0 20px; overflow: hidden; visibility: hidden; background: inherit; color: inherit; border-bottom: 1px solid transparent; opacity: 0; transition: max-height .45s cubic-bezier(.22,1,.36,1), padding .45s cubic-bezier(.22,1,.36,1), opacity .25s ease, visibility 0s .45s, border-color .3s ease; }
-  .site-header nav.is-open { max-height: calc(100svh - 66px); padding-block: 24px 30px; overflow-y: auto; visibility: visible; border-bottom-color: color-mix(in oklab, currentColor 22%, transparent); opacity: 1; transition-delay: 0s; }
-  .site-header nav > a { padding: 17px 0; border-bottom: 1px solid color-mix(in oklab, currentColor 18%, transparent); font-size: 20px; line-height: 1.1; letter-spacing: 0; }
-  .site-header nav a::after { bottom: 11px; right: auto; width: 32px; }
-  .site-header nav .language-switch { margin: 25px 0 0; padding: 0; border-left: 0; gap: 9px; }
-  .site-header nav .language-switch a { font-size: 11px; letter-spacing: .18em; }
+  .home-header nav { position: fixed; inset: 66px 0 auto; display: grid; grid-template-columns: 1fr; gap: 0; height: calc(100svh - 66px); max-height: 0; padding: 0 20px; overflow: hidden; visibility: hidden; background: inherit; color: inherit; border-bottom: 1px solid transparent; opacity: 0; transition: max-height .45s cubic-bezier(.22,1,.36,1), padding .45s cubic-bezier(.22,1,.36,1), opacity .25s ease, visibility 0s .45s, border-color .3s ease; }
+  .home-header nav.is-open { max-height: calc(100svh - 66px); padding-block: 24px 30px; overflow-y: auto; visibility: visible; border-bottom-color: color-mix(in oklab, currentColor 22%, transparent); opacity: 1; transition-delay: 0s; }
+  .home-header nav > a { padding: 17px 0; border-bottom: 1px solid color-mix(in oklab, currentColor 18%, transparent); font-size: 20px; line-height: 1.1; letter-spacing: 0; }
+  .home-header nav a::after { bottom: 11px; right: auto; width: 32px; }
+  .home-header nav .language-switch { margin: 25px 0 0; padding: 0; border-left: 0; gap: 9px; }
+  .home-header nav .language-switch a { font-size: 11px; letter-spacing: .18em; }
+  .legal-header nav { gap: 16px; }
+  .legal-header nav a { font-size: 9px; letter-spacing: .12em; }
   .legal-page { padding-top: 66px; }
   .legal-header nav { align-items: center; }
   .legal-shell { width: calc(100% - 40px); padding: 58px 0 90px; grid-template-columns: 1fr; gap: 58px; }

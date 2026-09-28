@@ -463,7 +463,7 @@ function Index() {
 
   return (
     <main>
-      <header className="site-header">
+      <header className="site-header home-header">
         <a className="brand" href="#introduction" aria-label="TRADEMARK — accueil">TRADEMARK</a>
         <Button className="menu-toggle" variant="ghost" size="icon" type="button" aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"} aria-controls="main-navigation-fr" aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}>
           {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
